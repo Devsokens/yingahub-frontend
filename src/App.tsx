@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Base44AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
@@ -41,48 +42,50 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+      <Base44AuthProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/onboarding" element={<Onboarding />} />
 
-          {/* Student */}
-          <Route path="/student" element={<StudentLayout />}>
-            <Route path="dashboard" element={<StudentDashboard />} />
-            <Route path="documents" element={<StudentDocuments />} />
-            <Route path="applications" element={<StudentApplications />} />
-            <Route path="ai-test" element={<AITest />} />
-            <Route path="ai-profile" element={<AIProfile />} />
-            <Route path="messages" element={<StudentMessages />} />
-            <Route path="payments" element={<StudentPayments />} />
-          </Route>
+            {/* Student */}
+            <Route path="/student" element={<StudentLayout />}>
+              <Route path="dashboard" element={<StudentDashboard />} />
+              <Route path="documents" element={<StudentDocuments />} />
+              <Route path="applications" element={<StudentApplications />} />
+              <Route path="ai-test" element={<AITest />} />
+              <Route path="ai-profile" element={<AIProfile />} />
+              <Route path="messages" element={<StudentMessages />} />
+              <Route path="payments" element={<StudentPayments />} />
+            </Route>
 
-          {/* Parent */}
-          <Route path="/parent" element={<ParentLayout />}>
-            <Route path="dashboard" element={<ParentDashboard />} />
-            <Route path="financial" element={<FinancialProfile />} />
-            <Route path="child-tracking" element={<ChildTracking />} />
-            <Route path="documents" element={<ParentDocuments />} />
-            <Route path="budget" element={<Budget />} />
-          </Route>
+            {/* Parent */}
+            <Route path="/parent" element={<ParentLayout />}>
+              <Route path="dashboard" element={<ParentDashboard />} />
+              <Route path="financial" element={<FinancialProfile />} />
+              <Route path="child-tracking" element={<ChildTracking />} />
+              <Route path="documents" element={<ParentDocuments />} />
+              <Route path="budget" element={<Budget />} />
+            </Route>
 
-          {/* Admin */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="students" element={<AdminStudents />} />
-            <Route path="documents" element={<AdminDocuments />} />
-            <Route path="applications" element={<AdminApplications />} />
-            <Route path="messages" element={<AdminMessages />} />
-            <Route path="universities" element={<AdminUniversities />} />
-            <Route path="stats" element={<AdminStats />} />
-          </Route>
+            {/* Admin */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="students" element={<AdminStudents />} />
+              <Route path="documents" element={<AdminDocuments />} />
+              <Route path="applications" element={<AdminApplications />} />
+              <Route path="messages" element={<AdminMessages />} />
+              <Route path="universities" element={<AdminUniversities />} />
+              <Route path="stats" element={<AdminStats />} />
+            </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </Base44AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

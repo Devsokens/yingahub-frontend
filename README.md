@@ -1,73 +1,38 @@
-# Welcome to your Lovable project
+# Yinga Hub - Plateforme d'Orientation Universitaire en Chine
 
-## Project info
+Yinga Hub est la première solution africaine d'orientation et d'inscription universitaire en Chine, propulsée par l'IA.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Vision du projet
 
-## How can I edit this code?
+Yinga Hub est une plateforme SaaS de bout en bout qui digitalise intégralement le parcours d'inscription universitaire en Chine, depuis l'orientation psychologique par IA jusqu'au suivi de candidature en temps réel.
 
-There are several ways of editing your application.
+## Technologies utilisées
 
-**Use Lovable**
+Ce projet est construit avec :
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **Vite**
+- **TypeScript**
+- **React**
+- **shadcn-ui**
+- **Tailwind CSS**
+- **Framer Motion** (pour les animations)
+- **Base44** (pour l'authentification)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Installation et démarrage
 
-**Use your preferred IDE**
+Assurez-vous d'avoir Node.js installé.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Installation des dépendances
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Démarrage du serveur de développement
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Structure du projet
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- `src/components`: Composants réutilisables, organisés par rôle (admin, student, parent).
+- `src/pages`: Pages de l'application.
+- `src/hooks`: Hooks personnalisés.
+- `src/lib`: Utilitaires et configurations.

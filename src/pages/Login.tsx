@@ -1,17 +1,40 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Zap, ArrowLeft } from "lucide-react";
+import { Zap, ArrowLeft, Loader2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Login logic will be added later
+    if (!email || !password) {
+      toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
+    try {
+      await login(email, password);
+      toast.success("Connexion réussie");
+      
+      // Redirect based on role (mock logic)
+      if (email.includes('admin')) {
+        navigate("/admin/dashboard");
+      } else if (email.includes('parent')) {
+        navigate("/parent/dashboard");
+      } else {
+        navigate("/student/dashboard");
+      }
+    } catch (error) {
+      toast.error("Erreur lors de la connexion");
+    }
   };
 
   return (
@@ -64,8 +87,8 @@ const Login = () => {
                 className="mt-1"
               />
             </div>
-            <Button type="submit" className="w-full" size="lg">
-              Se connecter
+            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+              {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Se connecter"}
             </Button>
           </form>
 
