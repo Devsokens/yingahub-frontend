@@ -1,9 +1,10 @@
 import { 
   LayoutDashboard, FileText, GraduationCap, Brain, 
-  MessageSquare, CreditCard, User, LogOut, Zap, ChevronLeft
+  MessageSquare, CreditCard, User, LogOut, ChevronLeft
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
+import Logo from "@/components/ui/Logo";
 import {
   Sidebar,
   SidebarContent,
@@ -20,8 +21,8 @@ import {
 
 const mainItems = [
   { title: "Tableau de bord", url: "/student/dashboard", icon: LayoutDashboard },
-  { title: "Test IA", url: "/student/ai-test", icon: Brain },
-  { title: "Profil IA", url: "/student/ai-profile", icon: User },
+  // { title: "Test IA", url: "/student/ai-test", icon: Brain },
+  // { title: "Profil IA", url: "/student/ai-profile", icon: User },
   { title: "Documents", url: "/student/documents", icon: FileText },
   { title: "Candidatures", url: "/student/applications", icon: GraduationCap },
   { title: "Messagerie", url: "/student/messages", icon: MessageSquare },
@@ -36,13 +37,8 @@ export function StudentSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarHeader className="p-4">
-        <NavLink to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <Zap className="w-5 h-5 text-primary-foreground" />
-          </div>
-          {!collapsed && (
-            <span className="text-lg font-bold text-sidebar-foreground">Yinga Hub</span>
-          )}
+        <NavLink to="/">
+          <Logo imageClassName={collapsed ? "h-8" : "h-10"} />
         </NavLink>
       </SidebarHeader>
 

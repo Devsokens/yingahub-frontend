@@ -1,8 +1,9 @@
 import {
   LayoutDashboard, Users, FileText, GraduationCap, MessageSquare,
-  Building2, BarChart3, LogOut, Zap, Settings
+  Building2, BarChart3, LogOut, Settings
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import Logo from "@/components/ui/Logo";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
@@ -26,15 +27,10 @@ export function AdminSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarHeader className="p-4">
-        <NavLink to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
-            <Zap className="w-5 h-5 text-secondary-foreground" />
-          </div>
+        <NavLink to="/" className="flex flex-col">
+          <Logo imageClassName={collapsed ? "h-8" : "h-10"} />
           {!collapsed && (
-            <div>
-              <span className="text-lg font-bold text-sidebar-foreground">Yinga Hub</span>
-              <p className="text-[10px] text-primary font-semibold -mt-1">ADMIN</p>
-            </div>
+            <p className="text-[10px] text-primary font-semibold -mt-1 ml-1">ADMIN</p>
           )}
         </NavLink>
       </SidebarHeader>

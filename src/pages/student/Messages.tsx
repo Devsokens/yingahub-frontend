@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Zap } from "lucide-react";
+import { Send } from "lucide-react";
 import { motion } from "framer-motion";
+import Logo from "@/components/ui/Logo";
 
 interface Message {
   id: string;
@@ -44,9 +45,7 @@ export default function Messages() {
       <Card className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="p-4 border-b border-border flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">
-            <Zap className="w-4 h-4 text-primary-foreground" />
-          </div>
+          <Logo imageClassName="h-8" />
           <div>
             <p className="text-sm font-semibold text-foreground">Équipe Yinga Hub</p>
             <p className="text-xs text-green-500">En ligne</p>

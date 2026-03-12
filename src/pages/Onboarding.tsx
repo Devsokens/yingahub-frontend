@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Zap, ArrowLeft, ArrowRight, Check, Plus, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "@/components/ui/Logo";
 
 const steps = [
   { title: "Informations personnelles", subtitle: "Commençons par vos informations de base" },
@@ -39,11 +40,8 @@ const Onboarding = () => {
     <div className="min-h-screen flex">
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-2/5 bg-secondary flex-col justify-between p-12">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <Zap className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <span className="text-xl font-bold text-secondary-foreground">Yinga Hub</span>
+        <Link to="/">
+          <Logo imageClassName="h-16" />
         </Link>
 
         <div className="space-y-6">

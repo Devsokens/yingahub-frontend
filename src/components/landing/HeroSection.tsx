@@ -1,65 +1,92 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-16 overflow-hidden">
-      {/* Warm gradient bg */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent via-background to-background" />
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl -translate-x-1/2 -translate-y-1/4" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/5 blur-3xl translate-x-1/3" />
-
+    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      {/* Background with animated gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(226,29,29,0.05),transparent_50%),radial-gradient(circle_at_bottom_left,rgba(0,0,0,0.02),transparent_50%)]" />
+      
       <div className="container relative z-10 mx-auto px-4 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 bg-accent text-accent-foreground text-sm font-medium border border-primary/10"
+          className="inline-flex items-center gap-2 rounded-full px-6 py-2 mb-8 bg-primary/5 text-primary text-sm font-bold border border-primary/10 backdrop-blur-sm"
         >
-          <Zap className="w-3.5 h-3.5" />
-          Première plateforme africaine d'orientation vers la Chine
+          <Globe className="w-4 h-4 animate-pulse" />
+          Votre passerelle vers les meilleures universités de Chine
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight max-w-4xl mx-auto"
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[1.1] max-w-5xl mx-auto tracking-tight"
         >
-          Votre avenir en Chine{" "}
-          <br />
-          commence ici.
+          L'excellence chinoise à votre{" "}
+          <span className="text-gradient-yinga">portée.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium"
         >
-          Yinga Hub utilise l'intelligence artificielle pour vous orienter vers les meilleures
-          universités chinoises, gérer votre dossier et accompagner votre candidature de A à Z.
+          Simplifiez votre inscription universitaire en Chine. Nous vous accompagnons pas à pas, de l'orientation à l'admission finale.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+          transition={{ duration: 0.7, delay: 0.6 }}
+          className="mt-12 flex flex-col sm:row gap-6 justify-center"
         >
           <Link to="/onboarding">
-            <Button variant="hero" size="lg" className="text-base px-8 gap-2">
-              Commencer gratuitement <ArrowRight className="w-4 h-4" />
+            <Button size="xl" className="bg-gradient-yinga text-white border-none shadow-xl shadow-primary/20 hover:scale-105 transition-transform text-lg px-10 gap-3 group">
+              Démarrer mon projet <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
           <a href="#how-it-works">
-            <Button variant="heroOutline" size="lg" className="text-base px-8">
-              Découvrir le processus
+            <Button variant="outline" size="xl" className="text-lg px-10 border-2 hover:bg-secondary/5 transition-colors">
+              Découvrir le parcours
             </Button>
           </a>
         </motion.div>
+
+        {/* Floating cards decoration */}
+        <div className="hidden lg:block">
+           <motion.div 
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/4 -left-12 p-4 bg-white rounded-2xl shadow-2xl border border-border/50 backdrop-blur-sm"
+           >
+             <div className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">✓</div>
+               <div className="text-left">
+                 <p className="text-xs font-bold text-muted-foreground">Admission</p>
+                 <p className="text-sm font-black">100% Garantie</p>
+               </div>
+             </div>
+           </motion.div>
+
+           <motion.div 
+            animate={{ y: [0, 20, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-1/4 -right-12 p-4 bg-white rounded-2xl shadow-2xl border border-border/50 backdrop-blur-sm"
+           >
+             <div className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">★</div>
+               <div className="text-left">
+                 <p className="text-xs font-bold text-muted-foreground">Bourses</p>
+                 <p className="text-sm font-black">Disponibles</p>
+               </div>
+             </div>
+           </motion.div>
+        </div>
       </div>
     </section>
   );

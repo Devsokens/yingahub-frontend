@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Zap, ArrowLeft, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import Logo from "@/components/ui/Logo";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -42,9 +43,7 @@ const Login = () => {
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-secondary items-center justify-center p-12">
         <div className="max-w-md text-center">
-          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mx-auto mb-6">
-            <Zap className="w-8 h-8 text-primary-foreground" />
-          </div>
+          <Logo imageClassName="h-32 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-secondary-foreground mb-4">
             Bienvenue sur Yinga Hub
           </h2>
