@@ -7,6 +7,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateSubscription: (status: 'none' | 'self' | 'full') => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -31,11 +32,12 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     try {
       // Mock login logic - in a real app, this would call Base44 API
       console.log('Logging in with Base44...', email);
-      
-      // Temporary mock user based on email to test roles
+
       let role: UserRole = 'utilisateur';
       if (email.includes('admin')) {
         role = 'administrateur';
+      } else if (email.includes('universite') || email.includes('university')) {
+        role = 'university';
       }
 
       const mockUser: User = {
@@ -43,6 +45,8 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         email,
         full_name: email.split('@')[0],
         role,
+        subscription_status: (role === 'utilisateur' && email.includes('subscribed')) ? 'self' : 'none',
+        profile_completed: email.includes('complete'),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
@@ -67,6 +71,13 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   };
 
+  const updateSubscription = async (status: 'none' | 'self' | 'full') => {
+    if (!user) return;
+    const updatedUser = { ...user, subscription_status: status };
+    setUser(updatedUser);
+    localStorage.setItem('yingahub_user', JSON.stringify(updatedUser));
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -75,6 +86,7 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         isLoading,
         login,
         logout,
+        updateSubscription,
         isAuthenticated: !!user,
       }}
     >

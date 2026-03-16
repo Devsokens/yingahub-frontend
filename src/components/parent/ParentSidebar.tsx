@@ -2,8 +2,9 @@ import {
   LayoutDashboard, Wallet, Users, FileText, LogOut, Heart
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/components/ui/Logo";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
@@ -11,29 +12,39 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainItems = [
-  { title: "Tableau de bord", url: "/parent/dashboard", icon: LayoutDashboard },
-  { title: "Profil financier", url: "/parent/financial", icon: Wallet },
-  { title: "Suivi enfant", url: "/parent/child-tracking", icon: Users },
-  { title: "Documents enfant", url: "/parent/documents", icon: FileText },
-  { title: "Budget estimé", url: "/parent/budget", icon: Heart },
+  { title: "Dashboard", url: "/parent/dashboard", icon: LayoutDashboard },
+  { title: "Financial Profile", url: "/parent/financial", icon: Wallet },
+  { title: "Child Tracking", url: "/parent/child-tracking", icon: Users },
+  { title: "Child Documents", url: "/parent/documents", icon: FileText },
+  { title: "Estimated Budget", url: "/parent/budget", icon: Heart },
 ];
 
 export function ParentSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
-      <SidebarHeader className="p-4">
-        <NavLink to="/">
-          <Logo imageClassName={collapsed ? "h-8" : "h-10"} />
+      <SidebarHeader className="p-4 flex items-center justify-center">
+        <NavLink to="/" className="flex flex-col items-center">
+          <Logo imageClassName={collapsed ? "h-12" : "h-24"} />
+          {!collapsed && (
+            <p className="text-[10px] text-orange-400 font-bold uppercase tracking-widest -mt-1">PARENT</p>
+          )}
         </NavLink>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground">
-            {!collapsed && "Espace Parent"}
+            {!collapsed && "Parent Area"}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -59,14 +70,12 @@ export function ParentSidebar() {
       <SidebarFooter className="p-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <NavLink
-                to="/login"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-colors"
-              >
-                <LogOut className="w-5 h-5 shrink-0" />
-                {!collapsed && <span>Déconnexion</span>}
-              </NavLink>
+            <SidebarMenuButton
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-colors w-full cursor-pointer"
+            >
+              <LogOut className="w-5 h-5 shrink-0" />
+              {!collapsed && <span>Logout</span>}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

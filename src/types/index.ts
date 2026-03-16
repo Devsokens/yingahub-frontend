@@ -1,10 +1,13 @@
-export type UserRole = 'administrateur' | 'utilisateur';
+export type UserRole = 'administrateur' | 'utilisateur' | 'university';
+export type SubscriptionStatus = 'none' | 'self' | 'full';
 
 export interface User {
   id: string;
   full_name?: string;
   email: string;
   role: UserRole;
+  subscription_status: SubscriptionStatus;
+  profile_completed: boolean;
   created_at: string;
   updated_at: string;
 }

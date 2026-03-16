@@ -5,9 +5,9 @@ import { CreditCard, Download, DollarSign, Clock, CheckCircle2 } from "lucide-re
 import { motion } from "framer-motion";
 
 const payments = [
-  { id: "1", label: "Frais de dossier", amount: 150, status: "paid", date: "5 Jan 2026" },
-  { id: "2", label: "Frais d'inscription Tsinghua", amount: 800, status: "pending", date: "—" },
-  { id: "3", label: "Assurance santé", amount: 200, status: "pending", date: "—" },
+  { id: "1", label: "Application Fee", amount: 150, status: "paid", date: "Jan 5, 2026" },
+  { id: "2", label: "Tsinghua Enrollment Fee", amount: 800, status: "pending", date: "—" },
+  { id: "3", label: "Health Insurance", amount: 200, status: "pending", date: "—" },
 ];
 
 const totalPaid = payments.filter(p => p.status === "paid").reduce((s, p) => s + p.amount, 0);
@@ -17,8 +17,8 @@ export default function Payments() {
   return (
     <div className="space-y-6 max-w-4xl">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-2xl font-bold text-foreground">Paiements</h1>
-        <p className="text-muted-foreground mt-1">Gérez vos frais et téléchargez vos factures.</p>
+        <h1 className="text-2xl font-bold text-foreground">Payments</h1>
+        <p className="text-muted-foreground mt-1">Manage your fees and download your invoices.</p>
       </motion.div>
 
       {/* Summary cards */}
@@ -30,7 +30,7 @@ export default function Payments() {
                 <CheckCircle2 className="w-6 h-6 text-green-500" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Payé</p>
+                <p className="text-sm text-muted-foreground">Paid</p>
                 <p className="text-xl font-bold text-foreground">${totalPaid}</p>
               </div>
             </CardContent>
@@ -43,7 +43,7 @@ export default function Payments() {
                 <Clock className="w-6 h-6 text-amber-500" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">En attente</p>
+                <p className="text-sm text-muted-foreground">Pending</p>
                 <p className="text-xl font-bold text-foreground">${totalPending}</p>
               </div>
             </CardContent>
@@ -67,13 +67,12 @@ export default function Payments() {
       {/* Payment list */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
         <Card>
-          <CardHeader><CardTitle className="text-lg">Historique des paiements</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-lg">Payment History</CardTitle></CardHeader>
           <CardContent className="space-y-3">
             {payments.map((p) => (
               <div key={p.id} className="flex items-center gap-4 p-3 rounded-lg border border-border">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  p.status === "paid" ? "bg-green-500/10" : "bg-amber-500/10"
-                }`}>
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${p.status === "paid" ? "bg-green-500/10" : "bg-amber-500/10"
+                  }`}>
                   <CreditCard className={`w-5 h-5 ${p.status === "paid" ? "text-green-500" : "text-amber-500"}`} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -86,7 +85,7 @@ export default function Payments() {
                     <Download className="w-4 h-4" />
                   </Button>
                 ) : (
-                  <Button size="sm">Payer</Button>
+                  <Button size="sm">Pay Now</Button>
                 )}
               </div>
             ))}

@@ -116,10 +116,10 @@ export default function ParentDashboard() {
               </Link>
               <Link to="/parent/child-tracking">
                 <Button variant="outline" className="w-full justify-between h-12 text-left mt-3">
-                  <span className="flex items-center gap-3">
+                  {/* <span className="flex items-center gap-3">
                     <Brain className="w-4 h-4 text-primary" />
                     Voir le profil IA de Jean
-                  </span>
+                  </span> */}
                   <ArrowRight className="w-4 h-4 text-muted-foreground" />
                 </Button>
               </Link>

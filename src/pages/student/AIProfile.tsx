@@ -5,11 +5,11 @@ import { Brain, MapPin, GraduationCap, TrendingUp, AlertTriangle, Star } from "l
 import { motion } from "framer-motion";
 
 const scores = [
-  { dimension: "Autonomie", score: 4.2, max: 5, color: "bg-blue-500" },
-  { dimension: "Autorité", score: 3.5, max: 5, color: "bg-purple-500" },
-  { dimension: "Tolérance à la solitude", score: 3.8, max: 5, color: "bg-emerald-500" },
-  { dimension: "Adaptabilité", score: 4.5, max: 5, color: "bg-amber-500" },
-  { dimension: "Gestion du stress", score: 3.2, max: 5, color: "bg-rose-500" },
+  { dimension: "Autonomy", score: 4.2, max: 5, color: "bg-blue-500" },
+  { dimension: "Authority", score: 3.5, max: 5, color: "bg-purple-500" },
+  { dimension: "Solitude Tolerance", score: 3.8, max: 5, color: "bg-emerald-500" },
+  { dimension: "Adaptability", score: 4.5, max: 5, color: "bg-amber-500" },
+  { dimension: "Stress Management", score: 3.2, max: 5, color: "bg-rose-500" },
 ];
 
 const globalScore = scores.reduce((s, d) => s + d.score, 0);
@@ -22,24 +22,24 @@ const universities = [
 ];
 
 const cities = [
-  { name: "Beijing", score: 88, reason: "Vie culturelle riche, nombreuses universités" },
-  { name: "Shanghai", score: 85, reason: "Cosmopolite, opportunités professionnelles" },
-  { name: "Hangzhou", score: 82, reason: "Cadre de vie agréable, coût modéré" },
+  { name: "Beijing", score: 88, reason: "Rich cultural life, many universities" },
+  { name: "Shanghai", score: 85, reason: "Cosmopolitan, professional opportunities" },
+  { name: "Hangzhou", score: 82, reason: "Pleasant living environment, moderate cost" },
 ];
 
 const strengths = [
-  "Grande capacité d'adaptation aux nouveaux environnements",
-  "Forte autonomie dans le travail et la prise de décision",
-  "Bonne tolérance à l'éloignement familial",
+  "High capacity to adapt to new environments",
+  "Strong autonomy in work and decision making",
+  "Good tolerance for being away from family",
 ];
 
 const improvements = [
-  "Renforcer la gestion du stress face aux examens",
-  "Développer le leadership en contexte multiculturel",
+  "Strengthen stress management during exams",
+  "Develop leadership in multicultural contexts",
 ];
 
 export default function AIProfile() {
-  const level = globalScore >= 20 ? "Excellent" : globalScore >= 15 ? "Bon" : "À améliorer";
+  const level = globalScore >= 20 ? "Excellent" : globalScore >= 15 ? "Good" : "Needs Improvement";
   const levelColor = globalScore >= 20 ? "text-green-600" : globalScore >= 15 ? "text-amber-600" : "text-red-600";
 
   return (
@@ -50,8 +50,8 @@ export default function AIProfile() {
             <Brain className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Mon Profil IA</h1>
-            <p className="text-muted-foreground">Résultats de votre test d'orientation psychologique</p>
+            <h1 className="text-2xl font-bold text-foreground">My AI Profile</h1>
+            <p className="text-muted-foreground">Results of your psychological orientation test</p>
           </div>
         </div>
       </motion.div>
@@ -60,11 +60,11 @@ export default function AIProfile() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
         <Card className="border-primary/20">
           <CardContent className="pt-6 text-center">
-            <p className="text-sm text-muted-foreground mb-2">Score global</p>
+            <p className="text-sm text-muted-foreground mb-2">Global Score</p>
             <p className="text-5xl font-black text-foreground">{globalScore.toFixed(1)}<span className="text-xl text-muted-foreground">/25</span></p>
             <p className={`text-lg font-semibold mt-1 ${levelColor}`}>{level}</p>
             <p className="text-sm text-muted-foreground mt-3 max-w-md mx-auto">
-              Votre profil montre une forte adaptabilité et autonomie, ce qui est idéal pour des études en Chine. Quelques axes d'amélioration en gestion du stress.
+              Your profile shows strong adaptability and autonomy, which is ideal for studying in China. Some areas for improvement in stress management.
             </p>
           </CardContent>
         </Card>
@@ -73,7 +73,7 @@ export default function AIProfile() {
       {/* Dimensions */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
         <Card>
-          <CardHeader><CardTitle className="text-lg">Scores par dimension</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-lg">Scores by Dimension</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             {scores.map((s, i) => (
               <div key={i}>
@@ -99,7 +99,7 @@ export default function AIProfile() {
         {/* Strengths */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
           <Card>
-            <CardHeader><CardTitle className="text-lg flex items-center gap-2"><TrendingUp className="w-5 h-5 text-green-500" /> Points forts</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-lg flex items-center gap-2"><TrendingUp className="w-5 h-5 text-green-500" /> Strengths</CardTitle></CardHeader>
             <CardContent className="space-y-3">
               {strengths.map((s, i) => (
                 <div key={i} className="flex items-start gap-2">
@@ -114,7 +114,7 @@ export default function AIProfile() {
         {/* Improvements */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
           <Card>
-            <CardHeader><CardTitle className="text-lg flex items-center gap-2"><AlertTriangle className="w-5 h-5 text-amber-500" /> Axes d'amélioration</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-lg flex items-center gap-2"><AlertTriangle className="w-5 h-5 text-amber-500" /> Areas for Improvement</CardTitle></CardHeader>
             <CardContent className="space-y-3">
               {improvements.map((s, i) => (
                 <div key={i} className="flex items-start gap-2">
@@ -130,7 +130,7 @@ export default function AIProfile() {
       {/* University recommendations */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
         <Card>
-          <CardHeader><CardTitle className="text-lg flex items-center gap-2"><GraduationCap className="w-5 h-5 text-primary" /> Universités recommandées</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-lg flex items-center gap-2"><GraduationCap className="w-5 h-5 text-primary" /> Recommended Universities</CardTitle></CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {universities.map((u, i) => (
@@ -144,7 +144,7 @@ export default function AIProfile() {
                   </p>
                   {u.scholarship && (
                     <Badge variant="outline" className="text-xs mt-2 text-green-600 border-green-200">
-                      Bourse disponible
+                      Scholarship available
                     </Badge>
                   )}
                 </div>
@@ -157,7 +157,7 @@ export default function AIProfile() {
       {/* City recommendations */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
         <Card>
-          <CardHeader><CardTitle className="text-lg flex items-center gap-2"><MapPin className="w-5 h-5 text-primary" /> Villes recommandées</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-lg flex items-center gap-2"><MapPin className="w-5 h-5 text-primary" /> Recommended Cities</CardTitle></CardHeader>
           <CardContent className="space-y-3">
             {cities.map((c, i) => (
               <div key={i} className="flex items-center gap-4 p-3 rounded-lg border border-border">

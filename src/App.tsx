@@ -12,12 +12,24 @@ import NotFound from "./pages/NotFound";
 // Student
 import StudentLayout from "./components/student/StudentLayout";
 import StudentDashboard from "./pages/student/Dashboard";
-import StudentDocuments from "./pages/student/Documents";
 import StudentApplications from "./pages/student/Applications";
+import StudentApplicationDetail from "./pages/student/ApplicationDetail";
+import StudentApplicationNew from "./pages/student/ApplicationNew";
+import UniversityCatalogue from "./pages/student/UniversityCatalogue";
+import StudentSettings from "./pages/student/Settings";
 import AITest from "./pages/student/AITest";
 import AIProfile from "./pages/student/AIProfile";
 import StudentMessages from "./pages/student/Messages";
 import StudentPayments from "./pages/student/Payments";
+import PaymentGateway from "./pages/student/PaymentGateway";
+
+// University
+import UniversityLayout from "./components/university/UniversityLayout";
+import UniversityDashboard from "./pages/university/Dashboard";
+import UniversityApplications from "./pages/university/Applications";
+import UniversityMessages from "./pages/university/Messages";
+import UniversitySettings from "./pages/university/Settings";
+import UniversityStudents from "./pages/university/Students";
 
 // Parent
 import ParentLayout from "./components/parent/ParentLayout";
@@ -31,11 +43,14 @@ import Budget from "./pages/parent/Budget";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminStudents from "./pages/admin/Students";
-import AdminDocuments from "./pages/admin/Documents";
+import AdminStudentDetail from "./pages/admin/StudentDetail";
 import AdminApplications from "./pages/admin/Applications";
+import AdminApplicationDetail from "./pages/admin/ApplicationDetail";
+import AdminApplicationReview from "./pages/admin/ApplicationReview";
 import AdminMessages from "./pages/admin/Messages";
 import AdminUniversities from "./pages/admin/Universities";
-import AdminStats from "./pages/admin/Stats";
+import AdminUsers from "./pages/admin/Users";
+import AdminSettings from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
@@ -54,12 +69,25 @@ const App = () => (
             {/* Student */}
             <Route path="/student" element={<StudentLayout />}>
               <Route path="dashboard" element={<StudentDashboard />} />
-              <Route path="documents" element={<StudentDocuments />} />
+              <Route path="catalogue" element={<UniversityCatalogue />} />
               <Route path="applications" element={<StudentApplications />} />
+              <Route path="applications/new" element={<StudentApplicationNew />} />
+              <Route path="applications/:id" element={<StudentApplicationDetail />} />
               <Route path="ai-test" element={<AITest />} />
               <Route path="ai-profile" element={<AIProfile />} />
               <Route path="messages" element={<StudentMessages />} />
               <Route path="payments" element={<StudentPayments />} />
+              <Route path="payment" element={<PaymentGateway />} />
+              <Route path="settings" element={<StudentSettings />} />
+            </Route>
+
+            {/* University */}
+            <Route path="/university" element={<UniversityLayout />}>
+              <Route path="dashboard" element={<UniversityDashboard />} />
+              <Route path="applications" element={<UniversityApplications />} />
+              <Route path="messages" element={<UniversityMessages />} />
+              <Route path="students" element={<UniversityStudents />} />
+              <Route path="settings" element={<UniversitySettings />} />
             </Route>
 
             {/* Parent */}
@@ -75,11 +103,14 @@ const App = () => (
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="students" element={<AdminStudents />} />
-              <Route path="documents" element={<AdminDocuments />} />
+              <Route path="students/:id" element={<AdminStudentDetail />} />
               <Route path="applications" element={<AdminApplications />} />
+              <Route path="applications/:id" element={<AdminApplicationDetail />} />
+              <Route path="applications/:id/review" element={<AdminApplicationReview />} />
               <Route path="messages" element={<AdminMessages />} />
               <Route path="universities" element={<AdminUniversities />} />
-              <Route path="stats" element={<AdminStats />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

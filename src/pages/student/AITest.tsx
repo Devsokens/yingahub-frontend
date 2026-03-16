@@ -22,192 +22,192 @@ const categoryColors: Record<string, string> = {
 };
 
 const categoryLabels: Record<string, string> = {
-  autonomie: "🧠 Autonomie",
-  adaptabilité: "🌍 Adaptabilité",
-  stress: "⚡ Gestion du stress",
+  autonomie: "🧠 Autonomy",
+  adaptabilité: "🌍 Adaptability",
+  stress: "⚡ Stress Management",
   autorité: "👑 Leadership",
-  solitude: "💚 Indépendance",
+  solitude: "💚 Independence",
 };
 
 const questions: Question[] = [
   {
     id: 1,
-    question: "Comment réagissez-vous face à un problème inattendu quand vous êtes seul(e) ?",
+    question: "How do you react to an unexpected problem when you are alone?",
     category: "autonomie",
     options: [
-      { label: "J'attends de l'aide, je ne sais pas quoi faire", value: 1 },
-      { label: "Je demande conseil avant d'agir", value: 2 },
-      { label: "J'essaie de trouver une solution, mais j'ai besoin de validation", value: 3 },
-      { label: "Je prends l'initiative de résoudre le problème", value: 4 },
-      { label: "Je suis très à l'aise pour gérer seul(e) les imprévus", value: 5 },
+      { label: "I wait for help, I don't know what to do", value: 1 },
+      { label: "I ask for advice before acting", value: 2 },
+      { label: "I try to find a solution, but I need validation", value: 3 },
+      { label: "I take the initiative to solve the problem", value: 4 },
+      { label: "I am very comfortable managing unexpected situations alone", value: 5 },
     ],
   },
   {
     id: 2,
-    question: "Vous arrivez dans une ville où personne ne parle votre langue. Que faites-vous ?",
+    question: "You arrive in a city where no one speaks your language. What do you do?",
     category: "adaptabilité",
     options: [
-      { label: "Je panique et je cherche immédiatement à rentrer", value: 1 },
-      { label: "Je reste dans ma zone de confort et évite les interactions", value: 2 },
-      { label: "J'utilise un traducteur et je me débrouille pour les besoins de base", value: 3 },
-      { label: "Je tente de communiquer avec des gestes et quelques mots", value: 4 },
-      { label: "J'adore ce genre de défi, je m'adapte rapidement", value: 5 },
+      { label: "I panic and look to return immediately", value: 1 },
+      { label: "I stay in my comfort zone and avoid interactions", value: 2 },
+      { label: "I use a translator and manage for basic needs", value: 3 },
+      { label: "I try to communicate with gestures and a few words", value: 4 },
+      { label: "I love this kind of challenge, I adapt quickly", value: 5 },
     ],
   },
   {
     id: 3,
-    question: "Vous avez 3 examens la même semaine et un projet à rendre. Comment réagissez-vous ?",
+    question: "You have 3 exams in the same week and a project to submit. How do you react?",
     category: "stress",
     options: [
-      { label: "Je suis complètement submergé(e) et je ne sais pas par où commencer", value: 1 },
-      { label: "Je stresse beaucoup mais j'essaie de m'organiser à la dernière minute", value: 2 },
-      { label: "Je fais un planning mais j'ai du mal à le respecter", value: 3 },
-      { label: "Je gère bien la pression et je m'organise efficacement", value: 4 },
-      { label: "Je suis motivé(e) par la pression, ça me pousse à donner le meilleur", value: 5 },
+      { label: "I am completely overwhelmed and don't know where to start", value: 1 },
+      { label: "I stress a lot but try to organize at the last minute", value: 2 },
+      { label: "I make a schedule but have trouble sticking to it", value: 3 },
+      { label: "I handle pressure well and organize effectively", value: 4 },
+      { label: "I am motivated by pressure, it pushes me to do my best", value: 5 },
     ],
   },
   {
     id: 4,
-    question: "Dans un travail de groupe, quel rôle prenez-vous naturellement ?",
+    question: "In a group work, what role do you naturally take?",
     category: "autorité",
     options: [
-      { label: "Je suis les instructions des autres sans donner mon avis", value: 1 },
-      { label: "Je participe mais je laisse les autres décider", value: 2 },
-      { label: "Je propose des idées mais je ne m'impose pas", value: 3 },
-      { label: "Je coordonne souvent le groupe et répartis les tâches", value: 4 },
-      { label: "Je prends naturellement le lead et motive l'équipe", value: 5 },
+      { label: "I follow instructions from others without giving my opinion", value: 1 },
+      { label: "I participate but let others decide", value: 2 },
+      { label: "I suggest ideas but don't impose myself", value: 3 },
+      { label: "I often coordinate the group and distribute tasks", value: 4 },
+      { label: "I naturally take the lead and motivate the team", value: 5 },
     ],
   },
   {
     id: 5,
-    question: "Imaginez passer 6 mois loin de votre famille et vos amis. Comment vous sentez-vous ?",
+    question: "Imagine spending 6 months away from your family and friends. How do you feel?",
     category: "solitude",
     options: [
-      { label: "C'est impossible, je ne pourrais pas le supporter", value: 1 },
-      { label: "Ce serait très difficile, j'aurais besoin de contact constant", value: 2 },
-      { label: "Ce serait un défi mais je pourrais m'y adapter", value: 3 },
-      { label: "Je serais à l'aise, les appels vidéo suffiraient", value: 4 },
-      { label: "Aucun problème, j'aime mon indépendance", value: 5 },
+      { label: "It's impossible, I couldn't stand it", value: 1 },
+      { label: "It would be very difficult, I would need constant contact", value: 2 },
+      { label: "It would be a challenge but I could adapt", value: 3 },
+      { label: "I would be comfortable, video calls would be enough", value: 4 },
+      { label: "No problem, I love my independence", value: 5 },
     ],
   },
   {
     id: 6,
-    question: "On vous demande de présenter un projet devant 50 personnes. Quelle est votre réaction ?",
+    question: "You are asked to present a project in front of 50 people. What is your reaction?",
     category: "autorité",
     options: [
-      { label: "Je refuse catégoriquement, c'est trop stressant", value: 1 },
-      { label: "J'accepte mais avec beaucoup d'anxiété", value: 2 },
-      { label: "Je suis nerveux(se) mais je me prépare bien", value: 3 },
-      { label: "Je suis assez à l'aise, j'aime partager mes idées", value: 4 },
-      { label: "J'adore ça, c'est une opportunité de briller", value: 5 },
+      { label: "I categorically refuse, it's too stressful", value: 1 },
+      { label: "I accept but with a lot of anxiety", value: 2 },
+      { label: "I am nervous but I prepare well", value: 3 },
+      { label: "I am fairly comfortable, I like sharing my ideas", value: 4 },
+      { label: "I love it, it's an opportunity to shine", value: 5 },
     ],
   },
   {
     id: 7,
-    question: "Vous recevez plusieurs tâches urgentes en même temps. Que faites-vous ?",
+    question: "You receive several urgent tasks at the same time. What do you do?",
     category: "stress",
     options: [
-      { label: "Je suis paralysé(e) et je ne fais rien", value: 1 },
-      { label: "Je fais tout en même temps et le résultat est médiocre", value: 2 },
-      { label: "Je priorise mais avec difficulté", value: 3 },
-      { label: "Je priorise efficacement et je gère une tâche à la fois", value: 4 },
-      { label: "Je suis multitâche et je gère tout simultanément", value: 5 },
+      { label: "I am paralyzed and do nothing", value: 1 },
+      { label: "I do everything at once and the result is mediocre", value: 2 },
+      { label: "I prioritize but with difficulty", value: 3 },
+      { label: "I prioritize effectively and handle one task at a time", value: 4 },
+      { label: "I am multi-tasking and handle everything simultaneously", value: 5 },
     ],
   },
   {
     id: 8,
-    question: "On vous propose de goûter un plat totalement inconnu d'une autre culture. Votre réaction ?",
+    question: "You are offered to taste a completely unknown dish from another culture. Your reaction?",
     category: "adaptabilité",
     options: [
-      { label: "Non merci, je préfère ce que je connais", value: 1 },
-      { label: "J'hésite beaucoup mais je pourrais essayer un petit peu", value: 2 },
-      { label: "Pourquoi pas, si ça a l'air appétissant", value: 3 },
-      { label: "Oui, j'aime découvrir de nouvelles saveurs", value: 4 },
-      { label: "Absolument ! C'est ce que je préfère en voyage", value: 5 },
+      { label: "No thanks, I prefer what I know", value: 1 },
+      { label: "I hesitate a lot but I might try a little", value: 2 },
+      { label: "Why not, if it looks appetizing", value: 3 },
+      { label: "Yes, I like discovering new flavors", value: 4 },
+      { label: "Absolutely! That's what I prefer when traveling", value: 5 },
     ],
   },
   {
     id: 9,
-    question: "Votre ordinateur tombe en panne la veille d'un rendu important. Que faites-vous ?",
+    question: "Your computer breaks down the day before an important deadline. What do you do?",
     category: "autonomie",
     options: [
-      { label: "Je pleure et j'abandonne", value: 1 },
-      { label: "J'appelle quelqu'un pour m'aider immédiatement", value: 2 },
-      { label: "Je cherche des solutions en ligne et demande de l'aide", value: 3 },
-      { label: "Je trouve une alternative rapidement (bibliothèque, ami...)", value: 4 },
-      { label: "J'ai toujours un plan B, je suis préparé(e) à ce genre de situation", value: 5 },
+      { label: "I cry and give up", value: 1 },
+      { label: "I call someone to help me immediately", value: 2 },
+      { label: "I search for solutions online and ask for help", value: 3 },
+      { label: "I find an alternative quickly (library, friend...)", value: 4 },
+      { label: "I always have a plan B, I am prepared for this kind of situation", value: 5 },
     ],
   },
   {
     id: 10,
-    question: "Après un échec important (examen raté, rejet...), comment réagissez-vous ?",
+    question: "After an important failure (failed exam, rejection...), how do you react?",
     category: "stress",
     options: [
-      { label: "Je suis dévasté(e) pendant longtemps", value: 1 },
-      { label: "Je suis très affecté(e) mais je finis par m'en remettre", value: 2 },
-      { label: "Je suis déçu(e) mais j'analyse ce qui n'a pas marché", value: 3 },
-      { label: "Je rebondis vite et je me concentre sur la prochaine étape", value: 4 },
-      { label: "L'échec me motive encore plus à réussir", value: 5 },
+      { label: "I am devastated for a long time", value: 1 },
+      { label: "I am very affected but I eventually get over it", value: 2 },
+      { label: "I am disappointed but I analyze what didn't work", value: 3 },
+      { label: "I bounce back fast and focus on the next step", value: 4 },
+      { label: "Failure motivates me even more to succeed", value: 5 },
     ],
   },
   {
     id: 11,
-    question: "Vous êtes dans une soirée où vous ne connaissez personne. Que faites-vous ?",
+    question: "You are at a party where you know no one. What do you do?",
     category: "solitude",
     options: [
-      { label: "Je pars rapidement, je suis trop mal à l'aise", value: 1 },
-      { label: "Je reste dans un coin en espérant que quelqu'un vienne me parler", value: 2 },
-      { label: "J'observe d'abord puis j'engage la conversation prudemment", value: 3 },
-      { label: "Je vais vers les gens et je me présente", value: 4 },
-      { label: "Je suis le centre de la soirée en quelques minutes", value: 5 },
+      { label: "I leave quickly, I am too uncomfortable", value: 1 },
+      { label: "I stay in a corner hoping someone comes to talk to me", value: 2 },
+      { label: "I observe first then engage in conversation carefully", value: 3 },
+      { label: "I go to people and introduce myself", value: 4 },
+      { label: "I am the center of the party in a few minutes", value: 5 },
     ],
   },
   {
     id: 12,
-    question: "Seriez-vous prêt(e) à apprendre le mandarin pour étudier en Chine ?",
+    question: "Would you be ready to learn Mandarin to study in China?",
     category: "adaptabilité",
     options: [
-      { label: "Non, c'est trop difficile pour moi", value: 1 },
-      { label: "Peut-être, si c'est obligatoire", value: 2 },
-      { label: "Oui, mais j'aurais besoin de beaucoup de soutien", value: 3 },
-      { label: "Oui, j'aime apprendre de nouvelles langues", value: 4 },
-      { label: "Absolument, c'est même ce qui m'excite le plus dans ce projet", value: 5 },
+      { label: "No, it's too difficult for me", value: 1 },
+      { label: "Maybe, if it's mandatory", value: 2 },
+      { label: "Yes, but I would need a lot of support", value: 3 },
+      { label: "Yes, I like learning new languages", value: 4 },
+      { label: "Absolutely, it's even what excites me most about this project", value: 5 },
     ],
   },
   {
     id: 13,
-    question: "Comment gérez-vous vos études et votre emploi du temps au quotidien ?",
+    question: "How do you manage your studies and schedule daily?",
     category: "autonomie",
     options: [
-      { label: "Je n'ai pas vraiment d'organisation, je fais au jour le jour", value: 1 },
-      { label: "J'essaie de m'organiser mais j'oublie souvent des choses", value: 2 },
-      { label: "J'utilise un agenda mais je ne le suis pas toujours", value: 3 },
-      { label: "Je suis bien organisé(e) avec un planning clair", value: 4 },
-      { label: "Je suis ultra-organisé(e), chaque heure est planifiée", value: 5 },
+      { label: "I don't really have organization, I do it day by day", value: 1 },
+      { label: "I try to organize but often forget things", value: 2 },
+      { label: "I use a planner but don't always follow it", value: 3 },
+      { label: "I am well organized with a clear schedule", value: 4 },
+      { label: "I am ultra-organized, every hour is planned", value: 5 },
     ],
   },
   {
     id: 14,
-    question: "Un ami vous demande de diriger un projet associatif important. Votre réaction ?",
+    question: "A friend asks you to lead an important associative project. Your reaction?",
     category: "autorité",
     options: [
-      { label: "Je refuse, trop de responsabilités", value: 1 },
-      { label: "J'hésite beaucoup, je ne suis pas sûr(e) de mes capacités", value: 2 },
-      { label: "J'accepte mais je cherche un co-leader", value: 3 },
-      { label: "J'accepte avec enthousiasme et je commence à planifier", value: 4 },
-      { label: "C'est exactement le genre de défi que j'adore relever", value: 5 },
+      { label: "I refuse, too much responsibility", value: 1 },
+      { label: "I hesitate a lot, I'm not sure of my abilities", value: 2 },
+      { label: "I accept but look for a co-leader", value: 3 },
+      { label: "I accept with enthusiasm and start planning", value: 4 },
+      { label: "This is exactly the type of challenge I love taking on", value: 5 },
     ],
   },
   {
     id: 15,
-    question: "Vous devez vivre dans un logement modeste pendant vos études à l'étranger. Qu'en pensez-vous ?",
+    question: "You have to live in modest housing during your studies abroad. What do you think?",
     category: "adaptabilité",
     options: [
-      { label: "C'est inacceptable, j'ai besoin de mon confort", value: 1 },
-      { label: "Ce serait très difficile pour moi", value: 2 },
-      { label: "Je pourrais m'y faire si c'est temporaire", value: 3 },
-      { label: "Pas de problème, l'essentiel c'est les études", value: 4 },
-      { label: "Ça fait partie de l'aventure, j'aime sortir de ma zone de confort", value: 5 },
+      { label: "It's unacceptable, I need my comfort", value: 1 },
+      { label: "It would be very difficult for me", value: 2 },
+      { label: "I could get used to it if it's temporary", value: 3 },
+      { label: "No problem, the most important thing is the studies", value: 4 },
+      { label: "It's part of the adventure, I like getting out of my comfort zone", value: 5 },
     ],
   },
 ];
@@ -243,12 +243,12 @@ export default function AITest() {
           <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-green-500" />
           </div>
-          <h2 className="text-2xl font-bold text-foreground">Test terminé ! 🎉</h2>
+          <h2 className="text-2xl font-bold text-foreground">Test finished! 🎉</h2>
           <p className="text-muted-foreground">
-            Vos résultats ont été analysés par notre IA. Découvrez votre profil psychologique et vos recommandations.
+            Your results have been analyzed by our AI. Discover your psychological profile and recommendations.
           </p>
           <Button size="lg" onClick={() => navigate("/student/ai-profile")} className="gap-2">
-            Voir mon profil IA <ArrowRight className="w-4 h-4" />
+            View my AI Profile <ArrowRight className="w-4 h-4" />
           </Button>
         </motion.div>
       </div>
@@ -268,14 +268,14 @@ export default function AITest() {
               <Brain className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-foreground">Test d'Orientation IA</h1>
+              <h1 className="text-lg font-bold text-foreground">AI Orientation Test</h1>
               <p className="text-sm text-muted-foreground">
-                Question {currentQ + 1} sur {questions.length}
+                Question {currentQ + 1} of {questions.length}
               </p>
             </div>
           </div>
           <Button variant="ghost" size="sm" onClick={() => navigate("/student/dashboard")} className="text-muted-foreground">
-            Quitter
+            Quit
           </Button>
         </div>
         <Progress value={progress} className="h-2 mt-4" />
@@ -309,26 +309,23 @@ export default function AITest() {
                   <button
                     key={opt.value}
                     onClick={() => handleAnswer(opt.value)}
-                    className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all text-left ${
-                      currentAnswer === opt.value
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all text-left ${currentAnswer === opt.value
                         ? "border-primary bg-primary/5 ring-1 ring-primary/20"
                         : "border-border hover:border-primary/30 hover:bg-muted/30"
-                    }`}
+                      }`}
                   >
                     {/* Radio circle */}
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                        currentAnswer === opt.value ? "border-primary" : "border-muted-foreground/30"
-                      }`}
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${currentAnswer === opt.value ? "border-primary" : "border-muted-foreground/30"
+                        }`}
                     >
                       {currentAnswer === opt.value && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                     </div>
 
                     {/* Label */}
                     <span
-                      className={`text-sm ${
-                        currentAnswer === opt.value ? "text-foreground font-medium" : "text-muted-foreground"
-                      }`}
+                      className={`text-sm ${currentAnswer === opt.value ? "text-foreground font-medium" : "text-muted-foreground"
+                        }`}
                     >
                       {opt.label}
                     </span>
@@ -344,7 +341,7 @@ export default function AITest() {
       <div className="flex justify-between items-center">
         {currentQ > 0 ? (
           <Button variant="outline" onClick={prev} className="gap-1">
-            <ArrowLeft className="w-4 h-4" /> Précédent
+            <ArrowLeft className="w-4 h-4" /> Previous
           </Button>
         ) : (
           <div />
@@ -352,10 +349,10 @@ export default function AITest() {
         <Button onClick={next} disabled={!currentAnswer} className="gap-1">
           {currentQ < questions.length - 1 ? (
             <>
-              Suivant <ArrowRight className="w-4 h-4" />
+              Next <ArrowRight className="w-4 h-4" />
             </>
           ) : (
-            "Terminer le test"
+            "Finish Test"
           )}
         </Button>
       </div>

@@ -1,10 +1,11 @@
-import { 
-  LayoutDashboard, FileText, GraduationCap, Brain, 
-  MessageSquare, CreditCard, User, LogOut, ChevronLeft
+import {
+  LayoutDashboard, GraduationCap, Building2,
+  MessageSquare, CreditCard, Settings, LogOut, Search
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/components/ui/Logo";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sidebar,
   SidebarContent,
@@ -20,32 +21,41 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainItems = [
-  { title: "Tableau de bord", url: "/student/dashboard", icon: LayoutDashboard },
-  // { title: "Test IA", url: "/student/ai-test", icon: Brain },
-  // { title: "Profil IA", url: "/student/ai-profile", icon: User },
-  { title: "Documents", url: "/student/documents", icon: FileText },
-  { title: "Candidatures", url: "/student/applications", icon: GraduationCap },
-  { title: "Messagerie", url: "/student/messages", icon: MessageSquare },
-  { title: "Paiements", url: "/student/payments", icon: CreditCard },
+  { title: "Dashboard", url: "/student/dashboard", icon: LayoutDashboard },
+  { title: "University Catalogue", url: "/student/catalogue", icon: Search },
+  { title: "Applications", url: "/student/applications", icon: GraduationCap },
+  { title: "Messages", url: "/student/messages", icon: MessageSquare },
+  { title: "Payments", url: "/student/payments", icon: CreditCard },
+  { title: "Settings", url: "/student/settings", icon: Settings },
 ];
 
 export function StudentSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
-      <SidebarHeader className="p-4">
-        <NavLink to="/">
-          <Logo imageClassName={collapsed ? "h-8" : "h-10"} />
+      <SidebarHeader className="p-4 flex items-center justify-center">
+        <NavLink to="/" className="flex flex-col items-center">
+          <Logo imageClassName={collapsed ? "h-12" : "h-24"} />
+          {!collapsed && (
+            <p className="text-[10px] text-orange-400 font-bold uppercase tracking-widest -mt-1">STUDENT</p>
+          )}
         </NavLink>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground">
-            {!collapsed && "Menu principal"}
+            {!collapsed && "Main Menu"}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -71,14 +81,12 @@ export function StudentSidebar() {
       <SidebarFooter className="p-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <NavLink
-                to="/login"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-colors"
-              >
-                <LogOut className="w-5 h-5 shrink-0" />
-                {!collapsed && <span>Déconnexion</span>}
-              </NavLink>
+            <SidebarMenuButton
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-colors w-full cursor-pointer"
+            >
+              <LogOut className="w-5 h-5 shrink-0" />
+              {!collapsed && <span>Logout</span>}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

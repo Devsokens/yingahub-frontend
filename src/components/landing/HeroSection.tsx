@@ -1,92 +1,66 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Globe } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Background with animated gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(226,29,29,0.05),transparent_50%),radial-gradient(circle_at_bottom_left,rgba(0,0,0,0.02),transparent_50%)]" />
-      
-      <div className="container relative z-10 mx-auto px-4 text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full px-6 py-2 mb-8 bg-primary/5 text-primary text-sm font-bold border border-primary/10 backdrop-blur-sm"
-        >
-          <Globe className="w-4 h-4 animate-pulse" />
-          Votre passerelle vers les meilleures universités de Chine
-        </motion.div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/assets/hero_bg.png')" }}
+      />
+      {/* Dark overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0F2340]/85 via-[#1E3A5F]/75 to-[#0F2340]/80" />
+      {/* Orange accent glow */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
 
+      <div className="container relative z-10 mx-auto px-4 text-center pt-20">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[1.1] max-w-5xl mx-auto tracking-tight"
+          className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] max-w-5xl mx-auto tracking-tight"
         >
-          L'excellence chinoise à votre{" "}
-          <span className="text-gradient-yinga">portée.</span>
+          More Than Access.{" "}
+          <span className="text-gradient-yinga">The Right Match.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium"
+          className="mt-8 text-xl md:text-2xl text-white/75 max-w-3xl mx-auto leading-relaxed font-medium"
         >
-          Simplifiez votre inscription universitaire en Chine. Nous vous accompagnons pas à pas, de l'orientation à l'admission finale.
+          Simplify your university enrollment in China. We guide you step by step, from orientation to final admission.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="mt-12 flex flex-col sm:row gap-6 justify-center"
+          className="mt-12 flex flex-col sm:flex-row gap-5 justify-center"
         >
           <Link to="/onboarding">
-            <Button size="xl" className="bg-gradient-yinga text-white border-none shadow-xl shadow-primary/20 hover:scale-105 transition-transform text-lg px-10 gap-3 group">
-              Démarrer mon projet <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Button size="lg" className="bg-gradient-yinga text-white border-none shadow-2xl shadow-primary/30 hover:scale-105 transition-transform text-lg px-10 gap-3 group">
+              Start My Journey <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
-          <a href="#how-it-works">
-            <Button variant="outline" size="xl" className="text-lg px-10 border-2 hover:bg-secondary/5 transition-colors">
-              Découvrir le parcours
+          <a href="#how-it-works" onClick={(e) => { e.preventDefault(); document.querySelector("#how-it-works")?.scrollIntoView({ behavior: "smooth" }); }}>
+            <Button variant="outline" size="lg" className="text-lg px-10 border-2 border-white/40 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors">
+              See How It Works
             </Button>
           </a>
         </motion.div>
+      </div>
 
-        {/* Floating cards decoration */}
-        <div className="hidden lg:block">
-           <motion.div 
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 -left-12 p-4 bg-white rounded-2xl shadow-2xl border border-border/50 backdrop-blur-sm"
-           >
-             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">✓</div>
-               <div className="text-left">
-                 <p className="text-xs font-bold text-muted-foreground">Admission</p>
-                 <p className="text-sm font-black">100% Garantie</p>
-               </div>
-             </div>
-           </motion.div>
-
-           <motion.div 
-            animate={{ y: [0, 20, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-1/4 -right-12 p-4 bg-white rounded-2xl shadow-2xl border border-border/50 backdrop-blur-sm"
-           >
-             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">★</div>
-               <div className="text-left">
-                 <p className="text-xs font-bold text-muted-foreground">Bourses</p>
-                 <p className="text-sm font-black">Disponibles</p>
-               </div>
-             </div>
-           </motion.div>
-        </div>
+      {/* Bottom wave */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 80L1440 80L1440 40C1200 0 960 80 720 40C480 0 240 80 0 40L0 80Z" fill="white" />
+        </svg>
       </div>
     </section>
   );

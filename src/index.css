@@ -7,91 +7,103 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    --foreground: 213 52% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 213 52% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 213 52% 12%;
 
-    --primary: 0 72% 51%;
+    /* Orange logo color — "Yinga" */
+    --primary: 22 83% 51%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 10%;
+    /* Navy logo color — "Hub" */
+    --secondary: 213 52% 24%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 213 20% 96%;
+    --muted-foreground: 213 20% 45%;
 
-    --accent: 0 72% 98%;
-    --accent-foreground: 0 72% 51%;
+    --accent: 22 83% 96%;
+    --accent-foreground: 22 83% 42%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 72% 51%;
+    --border: 213 20% 88%;
+    --input: 213 20% 88%;
+    --ring: 22 83% 51%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 26%;
-    --sidebar-primary: 0 0% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 95%;
-    --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 0 72% 51%;
+    --sidebar-background: 213 52% 24%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 22 83% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 52% 30%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 213 52% 30%;
+    --sidebar-ring: 22 83% 51%;
 
-    --stats-bg: 0 0% 10%;
+    --stats-bg: 213 52% 24%;
     --stats-foreground: 0 0% 100%;
-    --hero-badge-bg: 0 72% 98%;
-    --hero-badge-text: 0 72% 45%;
-    --step-number: 0 72% 51%;
-    --cta-bg: 0 0% 5%;
+    --hero-badge-bg: 22 83% 96%;
+    --hero-badge-text: 22 83% 42%;
+    --step-number: 22 83% 51%;
+    --cta-bg: 213 52% 14%;
     --cta-foreground: 0 0% 100%;
   }
 
   .dark {
-    --background: 0 0% 5%;
+    --background: 213 52% 5%;
     --foreground: 0 0% 95%;
-    --card: 0 0% 8%;
+    --card: 213 52% 8%;
     --card-foreground: 0 0% 95%;
-    --popover: 0 0% 8%;
+    --popover: 213 52% 8%;
     --popover-foreground: 0 0% 95%;
-    --primary: 0 72% 51%;
+    --primary: 22 83% 55%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 15%;
+    --secondary: 213 52% 18%;
     --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 12%;
+    --muted: 213 30% 12%;
     --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 12%;
+    --accent: 213 30% 12%;
     --accent-foreground: 0 0% 95%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 72% 51%;
+    --border: 213 30% 18%;
+    --input: 213 30% 18%;
+    --ring: 22 83% 55%;
   }
 }
 
 @layer utilities {
   .bg-gradient-yinga {
-    @apply bg-gradient-to-br from-[#E21D1D] to-[#8B1212];
+    @apply bg-gradient-to-br from-[#E8631A] to-[#C44A0A];
   }
-  .bg-gradient-dark {
-    @apply bg-gradient-to-br from-[#1A1A1A] to-[#000000];
+
+  .bg-gradient-navy {
+    @apply bg-gradient-to-br from-[#1E3A5F] to-[#0F2340];
   }
+
   .text-gradient-yinga {
-    @apply bg-gradient-to-br from-[#E21D1D] to-[#8B1212] bg-clip-text text-transparent;
+    @apply bg-gradient-to-br from-[#E8631A] to-[#C44A0A] bg-clip-text text-transparent;
+  }
+
+  .text-gradient-navy {
+    @apply bg-gradient-to-br from-[#1E3A5F] to-[#2E5A8F] bg-clip-text text-transparent;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {

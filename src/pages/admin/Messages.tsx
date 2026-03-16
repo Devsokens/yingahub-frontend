@@ -7,19 +7,19 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Search, Send, MessageSquare } from "lucide-react";
 
 const conversations = [
-  { id: 1, name: "Jean Dupont", lastMessage: "Merci pour la validation !", unread: 2, time: "Il y a 5min" },
-  { id: 2, name: "Aïcha Bamba", lastMessage: "Mon document est-il conforme ?", unread: 1, time: "Il y a 30min" },
-  { id: 3, name: "Paul Mbeki", lastMessage: "Quand recevrai-je la confirmation ?", unread: 0, time: "Il y a 2h" },
-  { id: 4, name: "Fatou Diallo", lastMessage: "J'ai uploadé mon passeport.", unread: 3, time: "Il y a 1h" },
-  { id: 5, name: "Omar Sy", lastMessage: "Pouvez-vous vérifier mon dossier ?", unread: 0, time: "Hier" },
+  { id: 1, name: "Jean Dupont", lastMessage: "Thanks for the validation!", unread: 2, time: "5m ago" },
+  { id: 2, name: "Aïcha Bamba", lastMessage: "Is my document compliant?", unread: 1, time: "30m ago" },
+  { id: 3, name: "Paul Mbeki", lastMessage: "When will I receive confirmation?", unread: 0, time: "2h ago" },
+  { id: 4, name: "Fatou Diallo", lastMessage: "I've uploaded my passport.", unread: 3, time: "1h ago" },
+  { id: 5, name: "Omar Sy", lastMessage: "Can you check my application?", unread: 0, time: "Yesterday" },
 ];
 
 const mockMessages = [
-  { sender: "student", text: "Bonjour, j'ai soumis mon passeport hier.", time: "10:30" },
-  { sender: "admin", text: "Bonjour Jean ! Je vais vérifier votre document.", time: "10:35" },
-  { sender: "student", text: "Merci beaucoup. J'ai aussi une question sur les frais.", time: "10:38" },
-  { sender: "admin", text: "Bien sûr, je suis à votre disposition.", time: "10:40" },
-  { sender: "student", text: "Merci pour la validation !", time: "11:00" },
+  { sender: "student", text: "Hello, I submitted my passport yesterday.", time: "10:30" },
+  { sender: "admin", text: "Hello Jean! I will verify your document.", time: "10:35" },
+  { sender: "student", text: "Thank you very much. I also have a question about fees.", time: "10:38" },
+  { sender: "admin", text: "Of course, I am at your disposal.", time: "10:40" },
+  { sender: "student", text: "Thanks for the validation!", time: "11:00" },
 ];
 
 export default function AdminMessages() {
@@ -33,7 +33,7 @@ export default function AdminMessages() {
     <div className="space-y-4 max-w-6xl">
       <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
         <MessageSquare className="w-6 h-6 text-primary" />
-        Messagerie
+        Messages
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[calc(100vh-220px)]">
@@ -43,7 +43,7 @@ export default function AdminMessages() {
             <div className="p-3 border-b border-border">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input placeholder="Rechercher..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 h-9" />
+                <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 h-9" />
               </div>
             </div>
             <ScrollArea className="flex-1">
@@ -51,9 +51,8 @@ export default function AdminMessages() {
                 <div
                   key={conv.id}
                   onClick={() => setSelectedConv(conv)}
-                  className={`p-3 border-b border-border/50 cursor-pointer transition-colors ${
-                    selectedConv.id === conv.id ? "bg-primary/5" : "hover:bg-muted/50"
-                  }`}
+                  className={`p-3 border-b border-border/50 cursor-pointer transition-colors ${selectedConv.id === conv.id ? "bg-primary/5" : "hover:bg-muted/50"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -90,7 +89,7 @@ export default function AdminMessages() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{selectedConv.name}</p>
-                <p className="text-xs text-muted-foreground">Étudiant</p>
+                <p className="text-xs text-muted-foreground">Student</p>
               </div>
             </div>
 
@@ -99,11 +98,10 @@ export default function AdminMessages() {
               <div className="space-y-4">
                 {mockMessages.map((msg, i) => (
                   <div key={i} className={`flex ${msg.sender === "admin" ? "justify-end" : "justify-start"}`}>
-                    <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
-                      msg.sender === "admin"
+                    <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${msg.sender === "admin"
                         ? "bg-primary text-primary-foreground rounded-br-md"
                         : "bg-muted text-foreground rounded-bl-md"
-                    }`}>
+                      }`}>
                       <p className="text-sm">{msg.text}</p>
                       <p className={`text-[10px] mt-1 ${msg.sender === "admin" ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                         {msg.time}
@@ -117,7 +115,7 @@ export default function AdminMessages() {
             {/* Input */}
             <div className="p-3 border-t border-border flex gap-2">
               <Input
-                placeholder="Écrire un message..."
+                placeholder="Type a message..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="flex-1"
