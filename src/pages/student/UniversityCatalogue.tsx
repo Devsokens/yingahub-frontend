@@ -165,17 +165,17 @@ export default function UniversityCatalogue() {
                         >
                             <Card className="border-2 border-primary/20 shadow-2xl shadow-primary/10 overflow-hidden rounded-[32px] bg-white/80 backdrop-blur-2xl">
                                 <div className="bg-gradient-yinga h-3 w-full" />
-                                <CardHeader className="text-center pt-8 pb-4">
-                                    <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto mb-6 shadow-sm border border-primary/5">
-                                        <Lock className="w-10 h-10 text-primary" />
+                                <CardHeader className="text-center pt-6 pb-2 md:pt-8 md:pb-4">
+                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-sm border border-primary/5">
+                                        <Lock className="w-8 h-8 md:w-10 md:h-10 text-primary" />
                                     </div>
-                                    <CardTitle className="text-3xl font-black italic tracking-tighter text-foreground uppercase">Access Restricted</CardTitle>
-                                    <CardDescription className="text-base font-medium mt-2 leading-relaxed px-4 text-muted-foreground italic">
+                                    <CardTitle className="text-2xl md:text-3xl font-black italic tracking-tighter text-foreground uppercase">Access Restricted</CardTitle>
+                                    <CardDescription className="text-sm md:text-base font-medium mt-2 leading-relaxed px-4 text-muted-foreground italic">
                                         The university catalogue is reserved for students with an active service plan.
                                     </CardDescription>
                                 </CardHeader>
-                                <CardContent className="px-8 pb-8 space-y-6">
-                                    <div className="space-y-3 bg-muted/40 p-5 rounded-2xl border border-border/50">
+                                <CardContent className="px-6 md:px-8 pb-6 md:pb-8 space-y-4 md:space-y-6 overflow-y-auto max-h-[60vh]">
+                                    <div className="space-y-3 bg-muted/40 p-4 md:p-5 rounded-2xl border border-border/50">
                                         <div className="flex items-center gap-3 text-sm font-bold text-foreground/80 italic">
                                             <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center">
                                                 <Rocket className="w-3 h-3 text-green-600" />

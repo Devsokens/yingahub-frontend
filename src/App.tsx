@@ -27,9 +27,10 @@ import PaymentGateway from "./pages/student/PaymentGateway";
 import UniversityLayout from "./components/university/UniversityLayout";
 import UniversityDashboard from "./pages/university/Dashboard";
 import UniversityApplications from "./pages/university/Applications";
+import UniversityApplicationReview from "./pages/university/ApplicationReview";
 import UniversityMessages from "./pages/university/Messages";
 import UniversitySettings from "./pages/university/Settings";
-import UniversityStudents from "./pages/university/Students";
+
 
 // Parent
 import ParentLayout from "./components/parent/ParentLayout";
@@ -85,8 +86,9 @@ const App = () => (
             <Route path="/university" element={<UniversityLayout />}>
               <Route path="dashboard" element={<UniversityDashboard />} />
               <Route path="applications" element={<UniversityApplications />} />
+              <Route path="applications/:id" element={<UniversityApplicationReview />} />
               <Route path="messages" element={<UniversityMessages />} />
-              <Route path="students" element={<UniversityStudents />} />
+
               <Route path="settings" element={<UniversitySettings />} />
             </Route>
 

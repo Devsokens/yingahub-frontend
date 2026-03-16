@@ -105,8 +105,8 @@ const FeaturesSection = () => {
           </div>
         </div>
 
-        {/* Supporting Features (Smaller/Refined) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
+        {/* Supporting Features (Enlarged & Refined) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mt-20 max-w-7xl mx-auto">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -114,13 +114,13 @@ const FeaturesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="flex flex-col items-center text-center p-4"
+              className="flex flex-col items-center text-center group"
             >
-              <div className="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center mb-4 text-primary">
-                <f.icon className="w-5 h-5" />
+              <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-sm">
+                <f.icon className="w-8 h-8" />
               </div>
-              <h4 className="text-sm font-bold mb-1">{f.title}</h4>
-              <p className="text-[11px] text-muted-foreground leading-relaxed">{f.description}</p>
+              <h4 className="text-xl font-black mb-3 uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors">{f.title}</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed font-medium">{f.description}</p>
             </motion.div>
           ))}
         </div>

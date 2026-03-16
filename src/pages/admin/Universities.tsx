@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Search, Building2, Plus, Pencil, Trash2, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
@@ -105,6 +105,9 @@ export default function AdminUniversities() {
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>Ajouter une université</DialogTitle>
+            <DialogDescription>
+              Remplissez les informations ci-dessous pour référencer un nouvel établissement.
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div><Label>Nom</Label><Input placeholder="Nom de l'université" /></div>
