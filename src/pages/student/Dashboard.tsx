@@ -63,7 +63,7 @@ export default function StudentDashboard() {
       {/* Welcome Header */}
       <motion.div {...fadeIn(0)}>
         <h1 className="text-3xl font-black text-foreground tracking-tight">Hello, {user?.full_name?.split(' ')[0] || 'Student'} 👋</h1>
-        <p className="text-muted-foreground mt-1 font-medium italic">Your journey to academic excellence starts here.</p>
+        <p className="text-muted-foreground mt-1 font-medium">Your journey to academic excellence starts here.</p>
       </motion.div>
 
       {/* KPIs */}
@@ -215,7 +215,7 @@ export default function StudentDashboard() {
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2">
-                <span className="text-xs text-muted-foreground font-medium italic">Updated 2h ago</span>
+                <span className="text-xs text-muted-foreground font-medium">Updated 2h ago</span>
                 <Button variant="link" className="text-xs p-0 h-auto font-black uppercase tracking-widest">View all</Button>
               </div>
             </CardContent>

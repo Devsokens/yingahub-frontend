@@ -8,6 +8,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateSubscription: (status: 'none' | 'self' | 'full') => Promise<void>;
+  submitQuestionnaire: (responses: Record<string, any>) => Promise<void>;
+  assignMatching: (universityIds: string[]) => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -21,8 +23,15 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   useEffect(() => {
     // Check for stored session/token
     const storedUser = localStorage.getItem('yingahub_user');
+    const simData = localStorage.getItem('yingahub_simulated_student');
+    
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      let parsedUser = JSON.parse(storedUser);
+      // Merge simulation data if it's a student login
+      if (parsedUser.role === 'utilisateur' && simData) {
+        parsedUser = { ...parsedUser, ...JSON.parse(simData) };
+      }
+      setUser(parsedUser);
     }
     setIsLoading(false);
   }, []);
@@ -51,8 +60,15 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         updated_at: new Date().toISOString(),
       };
 
-      setUser(mockUser);
-      localStorage.setItem('yingahub_user', JSON.stringify(mockUser));
+      // Simulation: Merge persistent data if it's a student login
+      const simData = localStorage.getItem('yingahub_simulated_student');
+      let finalUser = { ...mockUser };
+      if (role === 'utilisateur' && simData) {
+        finalUser = { ...finalUser, ...JSON.parse(simData) };
+      }
+
+      setUser(finalUser);
+      localStorage.setItem('yingahub_user', JSON.stringify(finalUser));
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -78,6 +94,44 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     localStorage.setItem('yingahub_user', JSON.stringify(updatedUser));
   };
 
+  const submitQuestionnaire = async (responses: Record<string, any>) => {
+    if (!user) return;
+    const updatedUser: User = { 
+      ...user, 
+      questionnaire_submitted: true, 
+      matching_status: 'pending',
+      questionnaire_responses: responses 
+    };
+    setUser(updatedUser);
+    localStorage.setItem('yingahub_user', JSON.stringify(updatedUser));
+    // Also save to a persistent simulation key that persists across logins
+    localStorage.setItem('yingahub_simulated_student', JSON.stringify({
+      questionnaire_submitted: true,
+      matching_status: 'pending',
+      questionnaire_responses: responses
+    }));
+  };
+
+  const assignMatching = async (universityIds: string[]) => {
+    // Save to the persistent simulation key
+    const currentSim = localStorage.getItem('yingahub_simulated_student');
+    const simData = currentSim ? JSON.parse(currentSim) : {};
+    
+    const updatedSim = {
+      ...simData,
+      matching_status: 'completed',
+      assigned_universities: universityIds
+    };
+    localStorage.setItem('yingahub_simulated_student', JSON.stringify(updatedSim));
+
+    // If currently logged in user is a student, update their state too
+    if (user && user.role === 'utilisateur') {
+      const updatedUser = { ...user, ...updatedSim };
+      setUser(updatedUser);
+      localStorage.setItem('yingahub_user', JSON.stringify(updatedUser));
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -87,6 +141,8 @@ export const Base44AuthProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         login,
         logout,
         updateSubscription,
+        submitQuestionnaire,
+        assignMatching,
         isAuthenticated: !!user,
       }}
     >

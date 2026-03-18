@@ -4,7 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, CheckCircle2, XCircle, Users, FileText, GraduationCap, Mail, Phone, MapPin, Calendar, BookOpen, ExternalLink, Building2, Eye } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, CheckCircle2, XCircle, Users, FileText, GraduationCap, Mail, Phone, MapPin, Calendar, BookOpen, ExternalLink, Building2, Eye, Star } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 
 const mockStudents = [
@@ -12,6 +15,18 @@ const mockStudents = [
         id: 1, name: "Jean Dupont", email: "jean@email.com", phone: "+241 77 111 111", country: "Gabon", city: "Libreville",
         level: "Bachelor", field: "Computer Science", gpa: "3.8", dob: "15/03/2001", nationality: "Gabonese",
         status: "approved", date: "15 Jan 2026",
+        questionnaire_submitted: true,
+        matching_status: 'completed',
+        assigned_universities: ['tsinghua', 'peking'],
+        questionnaire_responses: {
+            fullName: "Jean Dupont",
+            dob: "2001-03-15",
+            currentLevel: "Bachelor",
+            chinaField: "Computer Science",
+            englishLevel: "Good",
+            cultureReaction: "Highly adaptable, enjoys learning new cultures.",
+            goals: "Work in AI research in China."
+        },
         documents: [
             { name: "Passport", status: "validated", date: "10 Jan 2026" },
             { name: "Transcript", status: "validated", date: "10 Jan 2026" },
@@ -81,9 +96,9 @@ const mockStudents = [
 
 const statusConfig: Record<string, { label: string; color: string }> = {
     approved: { label: "Approved", color: "bg-green-500/10 text-green-600 border-green-200" },
-    pending_review: { label: "Under Review", color: "bg-amber-500/10 text-amber-600 border-amber-200" },
+    pending_review: { label: "Questionnaire Pending", color: "bg-orange-500/10 text-orange-600 border-orange-200" },
     rejected: { label: "Rejected", color: "bg-destructive/10 text-destructive border-destructive/20" },
-    incomplete: { label: "Incomplete", color: "bg-muted text-muted-foreground border-border" },
+    incomplete: { label: "No Questionnaire", color: "bg-muted text-muted-foreground border-border" },
 };
 
 const docStatusConfig: Record<string, { label: string; color: string }> = {
@@ -100,20 +115,61 @@ const appStatusConfig: Record<string, { label: string; color: string }> = {
     rejected: { label: "Rejected", color: "bg-destructive/10 text-destructive border-destructive/20" },
 };
 
+const StarRating = ({ rating, setRating }: { rating: number; setRating: (r: number) => void }) => (
+    <div className="flex gap-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+            <Star
+                key={star}
+                className={`w-4 h-4 cursor-pointer transition-colors ${
+                    star <= rating ? "fill-primary text-primary" : "text-muted-foreground/30 hover:text-primary/50"
+                }`}
+                onClick={() => setRating(star)}
+            />
+        ))}
+    </div>
+);
+
 export default function AdminStudentDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [student, setStudent] = useState<typeof mockStudents[0] | null>(null);
+    const { assignMatching } = useAuth();
+    const [student, setStudent] = useState<any | null>(null);
+    const [ratings, setRatings] = useState<Record<string, number>>({ academic: 4, language: 3, adaptation: 5, motivation: 4 });
+    const [selectedUnivs, setSelectedUnivs] = useState<string[]>([]);
+    const [isAssigning, setIsAssigning] = useState(false);
 
     useEffect(() => {
         const found = mockStudents.find(s => s.id === Number(id)) || mockStudents[0];
-        setStudent(found);
+        
+        // Simulation: merge live data from localStorage if available
+        const simData = localStorage.getItem('yingahub_simulated_student');
+        if (simData && (Number(id) === 1 || !id)) {
+            const parsedSim = JSON.parse(simData);
+            setStudent({ ...found, ...parsedSim });
+            if (parsedSim.assigned_universities) {
+                setSelectedUnivs(parsedSim.assigned_universities as string[]);
+            }
+        } else {
+            setStudent(found);
+            if (found && 'assigned_universities' in found) {
+                setSelectedUnivs(found.assigned_universities as string[]);
+            }
+        }
     }, [id]);
+
+    const handleAssign = () => {
+        setIsAssigning(true);
+        setTimeout(() => {
+            setIsAssigning(false);
+            assignMatching(selectedUnivs);
+            // In a real app, this would refresh the user data
+        }, 1000);
+    };
 
     if (!student) return null;
 
     return (
-        <div className="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-6xl mx-auto space-y-6">
             {/* Header & Back Button */}
             <div className="flex items-center gap-4">
                 <Button variant="ghost" size="icon" onClick={() => navigate("/admin/students")} className="shrink-0">
@@ -162,13 +218,13 @@ export default function AdminStudentDetail() {
                 </div>
 
                 <Tabs defaultValue="info" className="w-full">
-                    <TabsList className="w-full max-w-md grid grid-cols-3 mb-6">
-                        <TabsTrigger value="info" className="gap-2"><Users className="w-4 h-4" />Info</TabsTrigger>
-                        <TabsTrigger value="docs" className="gap-2">
-                            <FileText className="w-4 h-4" />Documents
-                            {student.documents.length > 0 && <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary/20 text-primary text-[10px]">{student.documents.length}</span>}
+                    <TabsList className="w-full max-w-lg grid grid-cols-3 mb-8 bg-muted/50 p-1 rounded-2xl">
+                        <TabsTrigger value="info" className="gap-2 rounded-xl data-[state=active]:shadow-sm"><Users className="w-4 h-4" />Profile</TabsTrigger>
+                        <TabsTrigger value="questionnaire" className="gap-2 rounded-xl data-[state=active]:shadow-sm">
+                            <FileText className="w-4 h-4" />Questionnaire
+                            {student.questionnaire_submitted && <Badge className="ml-1.5 bg-primary/20 text-primary border-none shadow-none text-[9px] px-1.5 h-4">New</Badge>}
                         </TabsTrigger>
-                        <TabsTrigger value="apps" className="gap-2">
+                        <TabsTrigger value="apps" className="gap-2 rounded-xl data-[state=active]:shadow-sm">
                             <GraduationCap className="w-4 h-4" />Applications
                             {student.applications.length > 0 && <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary/20 text-primary text-[10px]">{student.applications.length}</span>}
                         </TabsTrigger>
@@ -209,53 +265,214 @@ export default function AdminStudentDetail() {
                         </Card>
                     </TabsContent>
 
-                    {/* Tab 2 : Documents */}
-                    <TabsContent value="docs">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg">Student Documents</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {student.documents.length === 0 ? (
-                                    <div className="text-center py-12 bg-muted/20 rounded-lg border border-dashed border-border">
-                                        <FileText className="w-8 h-8 mx-auto text-muted-foreground mb-3" />
-                                        <p className="text-sm text-muted-foreground">No documents uploaded yet.</p>
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {student.documents.map((doc, i) => (
-                                            <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
-                                                <div className="flex items-center gap-3">
-                                                    <div className={`p-2 rounded-lg ${doc.status === 'validated' ? 'bg-green-500/10 text-green-600' : doc.status === 'pending' ? 'bg-amber-500/10 text-amber-600' : 'bg-destructive/10 text-destructive'}`}>
-                                                        <FileText className="w-5 h-5" />
+                    {/* Tab 2: Questionnaire & Evaluation */}
+                    <TabsContent value="questionnaire">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div className="lg:col-span-8 space-y-6">
+                                <Card className="border-border/50 shadow-sm rounded-[24px]">
+                                    <CardHeader className="border-b border-border/40 pb-4">
+                                        <CardTitle className="text-xl font-black tracking-tighter uppercase flex items-center gap-2 text-primary">
+                                            Academic Questionnaire
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="pt-6 space-y-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            {/* Section 1: Personal */}
+                                            <div className="space-y-4">
+                                                <h3 className="text-sm font-black uppercase tracking-widest text-primary">1. Personal Information</h3>
+                                                <div className="grid gap-4 bg-muted/20 p-5 rounded-[20px] border border-border/50">
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Full Name</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.fullName || student.name}</span>
                                                     </div>
-                                                    <div>
-                                                        <p className="text-sm font-semibold text-foreground">{doc.name}</p>
-                                                        <p className="text-xs text-muted-foreground mt-0.5">Added on {doc.date}</p>
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Birth Date</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.dob || student.dob}</span>
                                                     </div>
-                                                </div>
-                                                <div className="flex flex-col items-end gap-2">
-                                                    <Badge variant="outline" className={docStatusConfig[doc.status].color}>
-                                                        {docStatusConfig[doc.status].label}
-                                                    </Badge>
-                                                    <div className="flex items-center gap-1">
-                                                        <Button variant="ghost" size="icon" title="View Document" className="w-7 h-7 text-muted-foreground hover:text-primary">
-                                                            <Eye className="w-4 h-4" />
-                                                        </Button>
-                                                        {doc.status === 'pending' && (
-                                                            <>
-                                                                <Button variant="ghost" size="icon" title="Approve" className="w-7 h-7 text-green-600 hover:bg-green-50"><CheckCircle2 className="w-4 h-4" /></Button>
-                                                                <Button variant="ghost" size="icon" title="Reject" className="w-7 h-7 text-destructive hover:bg-destructive/10"><XCircle className="w-4 h-4" /></Button>
-                                                            </>
-                                                        )}
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Nationality</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.nationality || student.nationality}</span>
+                                                    </div>
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Whatsapp</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.whatsapp || student.phone}</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Residence</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.countryRes || student.country}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </CardContent>
-                        </Card>
+
+                                            {/* Section 2: Academic */}
+                                            <div className="space-y-4">
+                                                <h3 className="text-sm font-black uppercase tracking-widest text-primary">2. Academic Status</h3>
+                                                <div className="grid gap-4 bg-muted/20 p-5 rounded-[20px] border border-border/50">
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Institution</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.currentInstitution || "N/A"}</span>
+                                                    </div>
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">GPA/Average</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.gpa || student.gpa}</span>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div className="space-y-1">
+                                                            <p className="text-[10px] font-bold text-muted-foreground uppercase">Strong</p>
+                                                            <p className="text-[11px] text-foreground/80">{student.questionnaire_responses?.strongestSubjects || "Maths"}</p>
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            <p className="text-[10px] font-bold text-muted-foreground uppercase">Difficult</p>
+                                                            <p className="text-[11px] text-foreground/80">{student.questionnaire_responses?.difficultSubjects || "None"}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Section 3: Study Project */}
+                                            <div className="space-y-4">
+                                                <h3 className="text-sm font-black uppercase tracking-widest text-primary">3. Study Project in China</h3>
+                                                <div className="grid gap-4 bg-muted/20 p-5 rounded-[20px] border border-border/50">
+                                                    <div className="flex justify-between border-b border-border/30 pb-1">
+                                                        <p className="text-[10px] font-bold text-muted-foreground uppercase">Field</p>
+                                                        <p className="text-xs font-bold text-primary">{student.questionnaire_responses?.chinaField || "Unknown"}</p>
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <p className="text-[10px] font-bold text-muted-foreground uppercase">Why this field?</p>
+                                                        <p className="text-xs text-foreground/80 leading-relaxed truncate hover:text-clip">"{student.questionnaire_responses?.whyField || "N/A"}"</p>
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <p className="text-[10px] font-bold text-muted-foreground uppercase">Other Countries</p>
+                                                        <p className="text-[11px] text-muted-foreground">Considered: {student.questionnaire_responses?.otherCountries || "None"}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Section 4: Languages */}
+                                            <div className="space-y-4">
+                                                <h3 className="text-sm font-black uppercase tracking-widest text-primary">4. Languages</h3>
+                                                <div className="grid gap-4 bg-muted/20 p-5 rounded-[20px] border border-border/50">
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">English Level</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.englishLevel || "Medium"}</span>
+                                                    </div>
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Studied Mandarin?</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.studiedMandarin || "No"}</span>
+                                                    </div>
+                                                    {student.questionnaire_responses?.studiedMandarin === 'Yes' && (
+                                                        <div className="flex justify-between">
+                                                            <span className="text-[10px] font-bold text-muted-foreground uppercase">Mandarin Level</span>
+                                                            <span className="text-xs font-medium">{student.questionnaire_responses?.mandarinLevel}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Section 5: Adaptation */}
+                                            <div className="space-y-4">
+                                                <h3 className="text-sm font-black uppercase tracking-widest text-primary">5. Adaptation</h3>
+                                                <div className="grid gap-4 bg-muted/20 p-5 rounded-[20px] border border-border/50">
+                                                    <div className="flex justify-between border-b border-border/30 pb-2">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Lived Away?</span>
+                                                        <span className="text-xs font-medium">{student.questionnaire_responses?.livedAway || "No"}</span>
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <p className="text-[10px] font-bold text-muted-foreground uppercase">Culture Reaction</p>
+                                                        <p className="text-sm text-foreground/80">"{student.questionnaire_responses?.cultureReaction || "N/A"}"</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Section 6: Discipline */}
+                                            <div className="space-y-4">
+                                                <h3 className="text-sm font-black uppercase tracking-widest text-primary">6. Discipline</h3>
+                                                <div className="grid gap-4 bg-muted/20 p-5 rounded-[20px] border border-border/50">
+                                                    <div className="space-y-1">
+                                                        <p className="text-[10px] font-bold text-muted-foreground uppercase">Reaction to Critique</p>
+                                                        <p className="text-sm text-foreground/80">"{student.questionnaire_responses?.profCritique || "N/A"}"</p>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Strict Framework?</span>
+                                                        <span className="text-xs font-medium text-green-600 font-bold">{student.questionnaire_responses?.respectStrictFrame || "Yes"}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Section 7: Motivation (Full Width) */}
+                                        <div className="space-y-4 pt-4 border-t border-border/30">
+                                            <h3 className="text-sm font-black uppercase tracking-widest text-primary">7. Final Motivation & Concerns</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/20 p-6 rounded-[24px] border border-border/50 shadow-inner">
+                                                <div className="space-y-2">
+                                                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Future Goals</p>
+                                                    <p className="text-sm font-medium text-foreground leading-relaxed">"{student.questionnaire_responses?.goals || "N/A"}"</p>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Main Concerns</p>
+                                                    <p className="text-sm font-medium text-foreground leading-relaxed">"{student.questionnaire_responses?.concerns || "N/A"}"</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            <div className="lg:col-span-4 space-y-6">
+                                <Card className="border-border/50 shadow-sm rounded-[24px] sticky top-6">
+                                    <CardHeader className="pb-4">
+                                        <CardTitle className="text-base font-black tracking-tight uppercase border-b border-border/40 pb-3">Evaluation Control</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-bold uppercase text-muted-foreground">Academic</span>
+                                                <StarRating rating={ratings.academic} setRating={(r) => setRatings({...ratings, academic: r})} />
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-bold uppercase text-muted-foreground">Language</span>
+                                                <StarRating rating={ratings.language} setRating={(r) => setRatings({...ratings, language: r})} />
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-bold uppercase text-muted-foreground">Adaptation</span>
+                                                <StarRating rating={ratings.adaptation} setRating={(r) => setRatings({...ratings, adaptation: r})} />
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-bold uppercase text-muted-foreground">Motivation</span>
+                                                <StarRating rating={ratings.motivation} setRating={(r) => setRatings({...ratings, motivation: r})} />
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-6 border-t border-border/40">
+                                            <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4">Assign Universities for Matching</h4>
+                                            <div className="space-y-2 mb-6 max-h-[160px] overflow-y-auto px-1">
+                                                {['tsinghua', 'peking', 'fudan', 'zhejiang'].map((id) => (
+                                                    <div key={id} className="flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:bg-muted/30 transition-colors">
+                                                        <Checkbox 
+                                                            id={id} 
+                                                            checked={selectedUnivs.includes(id)}
+                                                            onCheckedChange={(checked) => {
+                                                                if (checked) setSelectedUnivs([...selectedUnivs, id]);
+                                                                else setSelectedUnivs(selectedUnivs.filter(u => u !== id));
+                                                            }}
+                                                        />
+                                                        <Label htmlFor={id} className="text-xs font-bold cursor-pointer uppercase">{id.charAt(0).toUpperCase() + id.slice(1)} University</Label>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <Button 
+                                                className="w-full h-12 rounded-xl font-black uppercase tracking-tighter shadow-lg shadow-primary/20 gap-2"
+                                                onClick={handleAssign}
+                                                disabled={isAssigning || selectedUnivs.length === 0}
+                                            >
+                                                {isAssigning ? "Processing..." : "Validate & Match"}
+                                                <CheckCircle2 className="w-4 h-4" />
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </div>
                     </TabsContent>
 
                     {/* Tab 3 : Candidatures */}

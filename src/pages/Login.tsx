@@ -56,7 +56,7 @@ const Login = () => {
           <p className="text-secondary-foreground/70 text-lg">
             The leading platform for Gabonese students pursuing higher education in China.
           </p>
-          <p className="mt-4 text-primary font-semibold italic text-lg">
+          <p className="mt-4 text-primary font-semibold text-lg">
             "More Than Access. The Right Match."
           </p>
         </div>

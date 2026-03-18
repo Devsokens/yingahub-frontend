@@ -214,7 +214,7 @@ export default function UniversityApplicationReview() {
                                         <div className="w-20 h-20 rounded-3xl bg-muted flex items-center justify-center mb-4">
                                             <FileText className="w-10 h-10 text-muted-foreground/30" />
                                         </div>
-                                        <p className="text-xl font-black italic tracking-tighter text-foreground">Document Analysis</p>
+                                        <p className="text-xl font-black tracking-tighter text-foreground">Document Analysis</p>
                                         <p className="text-xs text-muted-foreground mt-2 text-center px-4 font-medium uppercase tracking-widest">Previewing {activeDoc.name}</p>
                                         <Button variant="secondary" className="mt-8 gap-2 h-11 px-6 font-bold rounded-xl" onClick={() => window.open('#', '_blank')}>
                                             <ExternalLink className="w-4 h-4" /> View Full File
@@ -237,7 +237,7 @@ export default function UniversityApplicationReview() {
             <Dialog open={rejectDialogOpen} onOpenChange={setRejectDialogOpen}>
                 <DialogContent className="rounded-[32px] border-none shadow-2xl">
                     <DialogHeader>
-                        <DialogTitle className="text-2xl font-black italic tracking-tight uppercase">Reject Document</DialogTitle>
+                        <DialogTitle className="text-2xl font-black tracking-tight uppercase">Reject Document</DialogTitle>
                         <DialogDescription className="text-muted-foreground font-medium">
                             Please provide a reason for rejecting this document.
                         </DialogDescription>

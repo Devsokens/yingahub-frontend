@@ -75,7 +75,7 @@ export default function Settings() {
         <div className="space-y-6 max-w-5xl pb-10">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                 <h1 className="text-3xl font-black text-foreground tracking-tight">Settings</h1>
-                <p className="text-muted-foreground mt-1 font-medium italic">Manage your account preferences and service subscriptions.</p>
+                <p className="text-muted-foreground mt-1 font-medium">Manage your account preferences and service subscriptions.</p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -143,7 +143,7 @@ export default function Settings() {
                                             </div>
                                             <div className="space-y-2">
                                                 <Button size="sm" className="font-bold">Change Avatar</Button>
-                                                <p className="text-xs text-muted-foreground font-medium italic">Support JPG, PNG. Max 2MB.</p>
+                                                <p className="text-xs text-muted-foreground font-medium">Support JPG, PNG. Max 2MB.</p>
                                             </div>
                                         </div>
 
@@ -161,7 +161,7 @@ export default function Settings() {
                                         <div className="space-y-2">
                                             <Label htmlFor="email" className="font-bold text-sm">Email Address</Label>
                                             <Input id="email" defaultValue={user?.email} className="h-11 rounded-xl" readOnly />
-                                            <p className="text-[10px] text-muted-foreground font-medium italic">Contact support to change your verified email.</p>
+                                            <p className="text-[10px] text-muted-foreground font-medium">Contact support to change your verified email.</p>
                                         </div>
                                     </CardContent>
                                     <CardFooter className="pt-2">
@@ -223,7 +223,7 @@ export default function Settings() {
                                             {user?.subscription_status === 'self' && (
                                                 <div className="p-6 rounded-3xl border border-primary/20 bg-primary/5 flex flex-col md:flex-row items-center justify-between gap-6">
                                                     <div className="space-y-1">
-                                                        <h4 className="font-black text-lg italic tracking-tight">Need full accompaniment?</h4>
+                                                        <h4 className="font-black text-lg tracking-tight">Need full accompaniment?</h4>
                                                         <p className="text-sm font-medium text-muted-foreground">Upgrade to Full-Service for visa assistance & local integration.</p>
                                                     </div>
                                                     <Button variant="outline" className="h-11 font-black px-6 border-primary/30 hover:bg-primary/5 rounded-2xl" onClick={() => handlePlanSelect('Full-Service')}>
@@ -236,7 +236,7 @@ export default function Settings() {
                                 ) : (
                                     <div className="space-y-8">
                                         <div className="text-center space-y-2">
-                                            <h2 className="text-3xl font-black tracking-tight text-foreground italic">Unlock Your Potential</h2>
+                                            <h2 className="text-3xl font-black tracking-tight text-foreground">Unlock Your Potential</h2>
                                             <p className="text-muted-foreground font-medium text-lg">Choose the right tier to start your Chinese academic journey.</p>
                                         </div>
 
@@ -261,7 +261,7 @@ export default function Settings() {
                                                             <div className={`w-14 h-14 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-4 ${plan.color}`}>
                                                                 <plan.icon className="w-8 h-8" />
                                                             </div>
-                                                            <CardTitle className="text-2xl font-black italic tracking-tighter">{plan.name}</CardTitle>
+                                                            <CardTitle className="text-2xl font-black tracking-tighter">{plan.name}</CardTitle>
                                                             <CardDescription className="text-sm font-medium mt-1 leading-tight px-4">{plan.description}</CardDescription>
                                                         </CardHeader>
 
@@ -298,7 +298,7 @@ export default function Settings() {
 
                                         <div className="bg-muted/30 rounded-3xl p-6 border border-border/50 flex flex-col md:flex-row items-center gap-6">
                                             <div className="flex-1 space-y-1">
-                                                <h3 className="text-lg font-black flex items-center gap-2 italic">
+                                                <h3 className="text-lg font-black flex items-center gap-2">
                                                     <Headphones className="w-5 h-5 text-primary" />
                                                     Still Hesitating?
                                                 </h3>
@@ -326,7 +326,7 @@ export default function Settings() {
                                 <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
                                     <Sparkles className="w-8 h-8 text-muted-foreground opactiy-50" />
                                 </div>
-                                <p className="text-muted-foreground italic font-black text-lg">Under Construction</p>
+                                <p className="text-muted-foreground font-black text-lg">Under Construction</p>
                                 <p className="text-muted-foreground font-medium text-sm mt-1">This feature is coming soon in the next update.</p>
                             </motion.div>
                         )}

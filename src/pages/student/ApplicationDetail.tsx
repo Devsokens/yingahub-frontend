@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,9 +18,13 @@ import {
     AlertCircle,
     User,
     Eye,
-    MessageSquare
+    MessageSquare,
+    Lock,
+    ArrowRight
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
+import { QuestionnaireModal } from "@/components/student/QuestionnaireModal";
 
 const timelineEvents = [
     { status: "Draft Created", date: "Jan 5, 2026", description: "You started your application.", completed: true },
@@ -38,9 +42,21 @@ const documents = [
 
 export default function ApplicationDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const { user, submitQuestionnaire } = useAuth();
+    const isSubscribed = user?.subscription_status !== 'none';
+    const hasSubmitted = user?.questionnaire_submitted || false;
+    const matchingStatus = user?.matching_status || 'none';
 
     return (
-        <div className="space-y-8 max-w-6xl mx-auto pb-12">
+        <div className="relative min-h-[80vh]">
+            <QuestionnaireModal 
+                isOpen={!hasSubmitted} 
+                onClose={() => navigate('/student/dashboard')}
+                onSubmit={(data) => submitQuestionnaire(data)}
+            />
+
+            <div className={`space-y-8 max-w-6xl mx-auto pb-12 transition-all duration-500 ${(!isSubscribed || !hasSubmitted || matchingStatus === 'pending') ? 'blur-md grayscale opacity-40 pointer-events-none select-none scale-[0.98]' : ''}`}>
             {/* Header section with back navigation and quick stats */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="space-y-4">
@@ -207,7 +223,7 @@ export default function ApplicationDetail() {
                                         <div className="flex items-center justify-between pt-4 border-t border-border/30">
                                             <div className="flex items-center gap-1.5">
                                                 <CheckCircle2 className="w-3 h-3 text-green-500" />
-                                                <span className="text-[10px] font-black italic text-green-600 uppercase tracking-tighter">{doc.status}</span>
+                                                <span className="text-[10px] font-black text-green-600 uppercase tracking-tighter">{doc.status}</span>
                                             </div>
                                             <div className="flex gap-1">
                                                 <Button size="icon" variant="ghost" className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors">
@@ -289,6 +305,73 @@ export default function ApplicationDetail() {
                     </Card>
                 </TabsContent>
             </Tabs>
+            </div>
+
+            {hasSubmitted && matchingStatus === 'pending' && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/20 backdrop-blur-md">
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="w-full max-w-xl flex flex-col items-center justify-center py-10 md:py-16 px-6 md:px-8 text-center bg-white/80 backdrop-blur-2xl border border-primary/10 rounded-[32px] md:rounded-[40px] shadow-2xl shadow-primary/10"
+                    >
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-[24px] md:rounded-[28px] bg-primary/10 flex items-center justify-center mb-6 animate-pulse border border-primary/20">
+                            <Clock className="w-8 h-8 md:w-10 md:h-10 text-primary" />
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-foreground uppercase">Profile Under Review</h2>
+                        <p className="text-muted-foreground mt-4 max-w-md mx-auto font-medium text-sm md:text-base leading-relaxed">
+                            Full application details will be available once your profile evaluation is complete.
+                        </p>
+                        <Button 
+                            variant="secondary" 
+                            className="mt-6 md:mt-8 font-black uppercase tracking-widest text-[10px] md:text-xs h-10 md:h-12 px-6 md:px-8 rounded-xl shadow-lg border-border/50"
+                            onClick={() => navigate('/student/dashboard')}
+                        >
+                            Return to Dashboard
+                        </Button>
+                    </motion.div>
+                </div>
+            )}
+
+            {hasSubmitted && matchingStatus !== 'pending' && !isSubscribed && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/20 backdrop-blur-md">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        className="w-full max-w-md"
+                    >
+                        <Card className="border-2 border-primary/20 shadow-2xl shadow-primary/10 overflow-hidden rounded-[32px] bg-white/80 backdrop-blur-2xl">
+                            <div className="bg-gradient-yinga h-3 w-full" />
+                            <CardHeader className="text-center pt-8 pb-4">
+                                <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto mb-6 shadow-sm border border-primary/5">
+                                    <Lock className="w-10 h-10 text-primary" />
+                                </div>
+                                <CardTitle className="text-3xl font-black tracking-tighter text-foreground uppercase">Access Restricted</CardTitle>
+                                <CardDescription className="text-base font-medium mt-2 leading-relaxed px-4 text-muted-foreground">
+                                    A service plan is required to track your applications.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="px-8 pb-8 space-y-6">
+                                <div className="flex flex-col gap-3">
+                                    <Button
+                                        size="lg"
+                                        className="w-full h-12 md:h-14 bg-primary hover:bg-primary/90 text-sm md:text-lg font-black tracking-tight gap-2 shadow-xl shadow-primary/20 rounded-2xl uppercase"
+                                        onClick={() => navigate('/student/settings?tab=subscription')}
+                                    >
+                                        Choose My Plan <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full h-10 md:h-12 font-black text-muted-foreground hover:text-foreground rounded-xl uppercase text-[10px] md:text-xs tracking-widest"
+                                        onClick={() => navigate('/student/dashboard')}
+                                    >
+                                        Return to Dashboard
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+                </div>
+            )}
         </div>
     );
 }

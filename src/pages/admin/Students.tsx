@@ -13,6 +13,8 @@ const students = [
     id: 1, name: "Jean Dupont", email: "jean@email.com", phone: "+241 77 111 111", country: "Gabon", city: "Libreville",
     level: "Bachelor", field: "Computer Science", gpa: "3.8", dob: "15/03/2001", nationality: "Gabonese",
     status: "approved", date: "15 Jan 2026",
+    questionnaire_submitted: true,
+    matching_status: 'completed',
     documents: [
       { name: "Passport", status: "validated", date: "10 Jan 2026" },
       { name: "Transcript", status: "validated", date: "10 Jan 2026" },
@@ -27,6 +29,8 @@ const students = [
     id: 2, name: "Aïcha Bamba", email: "aicha@email.com", phone: "+241 77 222 222", country: "Gabon", city: "Port-Gentil",
     level: "Master", field: "International Business", gpa: "3.5", dob: "20/07/1999", nationality: "Gabonese",
     status: "pending_review", date: "18 Jan 2026",
+    questionnaire_submitted: true,
+    matching_status: 'pending',
     documents: [
       { name: "Passport", status: "validated", date: "15 Jan 2026" },
       { name: "Motivation Letter", status: "pending", date: "16 Jan 2026" },
@@ -82,9 +86,9 @@ const students = [
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   approved: { label: "Approved", color: "bg-green-500/10 text-green-600 border-green-200" },
-  pending_review: { label: "Under Review", color: "bg-amber-500/10 text-amber-600 border-amber-200" },
+  pending_review: { label: "Questionnaire Pending", color: "bg-orange-500/10 text-orange-600 border-orange-200" },
   rejected: { label: "Rejected", color: "bg-destructive/10 text-destructive border-destructive/20" },
-  incomplete: { label: "Incomplete", color: "bg-muted text-muted-foreground border-border" },
+  incomplete: { label: "No Questionnaire", color: "bg-muted text-muted-foreground border-border" },
 };
 
 export default function AdminStudents() {

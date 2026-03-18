@@ -8,6 +8,10 @@ export interface User {
   role: UserRole;
   subscription_status: SubscriptionStatus;
   profile_completed: boolean;
+  questionnaire_submitted?: boolean;
+  matching_status?: 'none' | 'pending' | 'completed';
+  assigned_universities?: string[];
+  questionnaire_responses?: Record<string, any>;
   created_at: string;
   updated_at: string;
 }

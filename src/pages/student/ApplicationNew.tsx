@@ -40,6 +40,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { QuestionnaireModal } from "@/components/student/QuestionnaireModal";
 
 const steps = [
     { id: "program", title: "Program Selection", icon: Search, description: "Choose your university and program" },
@@ -60,8 +61,10 @@ const UNIVERSITY_OPTIONS = [
 ];
 
 export default function ApplicationNew() {
-    const { user } = useAuth();
+    const { user, submitQuestionnaire } = useAuth();
     const isSubscribed = user?.subscription_status !== 'none';
+    const hasSubmitted = user?.questionnaire_submitted || false;
+    const matchingStatus = user?.matching_status || 'none';
     const [params] = useSearchParams();
     const initialUniv = params.get("univ") || "";
 
@@ -93,7 +96,13 @@ export default function ApplicationNew() {
 
     return (
         <div className="relative min-h-[80vh]">
-            <div className={`max-w-4xl mx-auto space-y-8 transition-all duration-500 ${!isSubscribed ? 'blur-md grayscale opacity-40 pointer-events-none select-none scale-[0.98]' : ''}`}>
+            <QuestionnaireModal 
+                isOpen={!hasSubmitted} 
+                onClose={() => navigate('/student/dashboard')}
+                onSubmit={(data) => submitQuestionnaire(data)}
+            />
+
+            <div className={`max-w-4xl mx-auto space-y-8 transition-all duration-500 ${(!isSubscribed || !hasSubmitted || matchingStatus === 'pending') ? 'blur-md grayscale opacity-40 pointer-events-none select-none scale-[0.98]' : ''}`}>
                 {/* Stepper Header */}
                 <div className="relative flex justify-between items-start pt-6 pb-2">
                     {/* Connection Line */}
@@ -325,7 +334,32 @@ export default function ApplicationNew() {
             </div>
 
             {/* Subscription Guard Modal */}
-            {!isSubscribed && (
+            {hasSubmitted && matchingStatus === 'pending' && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/20 backdrop-blur-md">
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="w-full max-w-xl flex flex-col items-center justify-center py-16 px-8 text-center bg-white/80 backdrop-blur-2xl border border-primary/10 rounded-[40px] shadow-2xl shadow-primary/10"
+                    >
+                        <div className="w-20 h-20 rounded-[28px] bg-primary/10 flex items-center justify-center mb-6 animate-pulse border border-primary/20">
+                            <Clock className="w-10 h-10 text-primary" />
+                        </div>
+                    <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-foreground uppercase">Profile Under Review</h2>
+                    <p className="text-muted-foreground mt-4 max-w-md mx-auto font-medium text-sm md:text-base leading-relaxed">
+                        Our team is currently analyzing your profile. You can start applying once your personalized matching is completed.
+                    </p>
+                    <Button 
+                        variant="secondary" 
+                        className="mt-6 md:mt-8 font-black uppercase tracking-widest text-[10px] md:text-xs h-10 md:h-12 px-6 md:px-8 rounded-xl shadow-lg border-border/50"
+                        onClick={() => navigate('/student/dashboard')}
+                    >
+                        Return to Dashboard
+                    </Button>
+                    </motion.div>
+                </div>
+            )}
+
+            {hasSubmitted && matchingStatus !== 'pending' && !isSubscribed && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/20 backdrop-blur-md">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -338,20 +372,20 @@ export default function ApplicationNew() {
                                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-sm border border-primary/5">
                                     <Lock className="w-8 h-8 md:w-10 md:h-10 text-primary" />
                                 </div>
-                                <CardTitle className="text-2xl md:text-3xl font-black italic tracking-tighter text-foreground uppercase">Access Restricted</CardTitle>
-                                <CardDescription className="text-sm md:text-base font-medium mt-2 leading-relaxed px-4 text-muted-foreground italic">
+                                <CardTitle className="text-2xl md:text-3xl font-black tracking-tighter text-foreground uppercase">Access Restricted</CardTitle>
+                                <CardDescription className="text-sm md:text-base font-medium mt-2 leading-relaxed px-4 text-muted-foreground">
                                     A service plan is required to access this feature.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="px-6 md:px-8 pb-6 md:pb-8 space-y-4 md:space-y-6 overflow-y-auto max-h-[60vh]">
                                 <div className="space-y-3 bg-muted/40 p-4 md:p-5 rounded-2xl border border-border/50">
-                                    <div className="flex items-center gap-3 text-sm font-bold text-foreground/80 italic">
+                                    <div className="flex items-center gap-3 text-sm font-bold text-foreground/80">
                                         <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center">
                                             <Rocket className="w-3 h-3 text-green-600" />
                                         </div>
                                         100+ Top Chinese Universities
                                     </div>
-                                    <div className="flex items-center gap-3 text-sm font-bold text-foreground/80 italic">
+                                    <div className="flex items-center gap-3 text-sm font-bold text-foreground/80">
                                         <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center">
                                             <Star className="w-3 h-3 text-green-600" />
                                         </div>
@@ -362,14 +396,14 @@ export default function ApplicationNew() {
                                 <div className="flex flex-col gap-3">
                                     <Button
                                         size="lg"
-                                        className="w-full h-14 bg-primary hover:bg-primary/90 text-lg font-black italic tracking-tight gap-2 shadow-xl shadow-primary/20 rounded-2xl uppercase"
+                                        className="w-full h-12 md:h-14 bg-primary hover:bg-primary/90 text-sm md:text-lg font-black tracking-tight gap-2 shadow-xl shadow-primary/20 rounded-2xl uppercase"
                                         onClick={() => navigate('/student/settings?tab=subscription')}
                                     >
-                                        Choose My Plan <ArrowRight className="w-5 h-5" />
+                                        Choose My Plan <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
                                     </Button>
                                     <Button
                                         variant="ghost"
-                                        className="w-full h-12 font-black text-muted-foreground hover:text-foreground rounded-xl uppercase italic text-xs tracking-widest"
+                                        className="w-full h-10 md:h-12 font-black text-muted-foreground hover:text-foreground rounded-xl uppercase text-[10px] md:text-xs tracking-widest"
                                         onClick={() => navigate('/student/dashboard')}
                                     >
                                         Return to Dashboard

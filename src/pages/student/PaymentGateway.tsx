@@ -66,7 +66,7 @@ export default function PaymentGateway() {
                         <CheckCircle2 className="w-12 h-12 text-white" />
                     </div>
                     <div className="space-y-2">
-                        <h1 className="text-3xl font-black text-foreground italic">Payment Confirmed!</h1>
+                        <h1 className="text-3xl font-black text-foreground">Payment Confirmed!</h1>
                         <p className="text-muted-foreground font-medium">Your subscription has been activated successfully.</p>
                     </div>
                     <div className="p-4 bg-white rounded-2xl border border-green-100 shadow-sm">
@@ -75,7 +75,7 @@ export default function PaymentGateway() {
                             <span className="font-mono font-bold">YH-7829-XQ-2026</span>
                         </div>
                     </div>
-                    <p className="text-xs text-muted-foreground animate-pulse italic">Redirecting to your dashboard...</p>
+                    <p className="text-xs text-muted-foreground animate-pulse">Redirecting to your dashboard...</p>
                 </motion.div>
             </div>
         );
@@ -97,7 +97,7 @@ export default function PaymentGateway() {
                     <div className="lg:col-span-2 space-y-6">
                         <Card className="border-none shadow-xl shadow-slate-200/50 rounded-[32px] overflow-hidden">
                             <CardHeader className="bg-white border-b border-slate-100 p-8">
-                                <CardTitle className="text-2xl font-black italic tracking-tight uppercase">Checkout</CardTitle>
+                                <CardTitle className="text-2xl font-black tracking-tight uppercase">Checkout</CardTitle>
                                 <CardDescription className="text-base">Secure your academic future with Yinga Hub.</CardDescription>
                             </CardHeader>
                             <CardContent className="p-8 space-y-8">
@@ -174,7 +174,7 @@ export default function PaymentGateway() {
                                                         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Airtel_Money_Logo.svg" alt="Airtel" className="h-6" />
                                                     </div>
                                                     <div className="p-3 border rounded-xl flex items-center justify-center grayscale hover:grayscale-0 cursor-pointer transition-all border-slate-100 bg-white shadow-sm h-14">
-                                                        <span className="font-black text-orange-500 italic">Moov</span>
+                                                        <span className="font-black text-orange-500">Moov</span>
                                                     </div>
                                                     <div className="p-3 border rounded-xl flex items-center justify-center grayscale hover:grayscale-0 cursor-pointer transition-all border-slate-100 bg-white shadow-sm h-14">
                                                         <span className="font-black text-[#FFCC00]">MTN</span>
@@ -188,7 +188,7 @@ export default function PaymentGateway() {
                                                     </div>
                                                 </div>
                                                 <div className="p-4 bg-orange-50 rounded-2xl border border-orange-100">
-                                                    <p className="text-[11px] text-orange-800 font-medium leading-relaxed italic">
+                                                    <p className="text-[11px] text-orange-800 font-medium leading-relaxed">
                                                         You will receive a prompt on your phone to confirm the transaction. Please enter your secret PIN to authorize.
                                                     </p>
                                                 </div>
@@ -199,7 +199,7 @@ export default function PaymentGateway() {
                                     <Button
                                         type="submit"
                                         disabled={isProcessing}
-                                        className="w-full h-14 bg-primary hover:bg-primary/90 text-lg font-black italic rounded-2xl shadow-xl shadow-primary/20 gap-3 group"
+                                        className="w-full h-14 bg-primary hover:bg-primary/90 text-lg font-black rounded-2xl shadow-xl shadow-primary/20 gap-3 group"
                                     >
                                         {isProcessing ? (
                                             <>
@@ -239,7 +239,7 @@ export default function PaymentGateway() {
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-start">
                                         <div className="space-y-1">
-                                            <p className="font-black italic text-lg leading-none">{plan}</p>
+                                            <p className="font-black text-lg leading-none">{plan}</p>
                                             <p className="text-xs text-muted-foreground font-medium">Single payment, full access</p>
                                         </div>
                                         <span className="font-black">${price}.00</span>
@@ -253,7 +253,7 @@ export default function PaymentGateway() {
                                         <span className="font-bold">$0.00</span>
                                     </div>
                                     <div className="flex justify-between items-center pt-4 border-t border-slate-100">
-                                        <span className="text-lg font-black italic">Total</span>
+                                        <span className="text-lg font-black">Total</span>
                                         <span className="text-2xl font-black text-primary">${price}.00</span>
                                     </div>
                                 </div>
