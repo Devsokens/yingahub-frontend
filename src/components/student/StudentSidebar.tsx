@@ -1,6 +1,7 @@
 import {
   LayoutDashboard, GraduationCap, Building2,
-  MessageSquare, CreditCard, Settings, LogOut, Search
+  MessageSquare, CreditCard, Settings, LogOut, Search,
+  Brain, Sparkles
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,6 +23,8 @@ import {
 
 const mainItems = [
   { title: "Dashboard", url: "/student/dashboard", icon: LayoutDashboard },
+  { title: "AI Orientation", url: "/student/ai-test", icon: Brain },
+  { title: "AI Profile", url: "/student/ai-profile", icon: Sparkles },
   { title: "University Catalogue", url: "/student/catalogue", icon: Search },
   { title: "Applications", url: "/student/applications", icon: GraduationCap },
   { title: "Messages", url: "/student/messages", icon: MessageSquare },

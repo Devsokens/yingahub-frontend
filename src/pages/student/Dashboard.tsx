@@ -11,7 +11,9 @@ import {
   MessageSquare,
   Building2,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  Brain,
+  Sparkles
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
@@ -181,42 +183,69 @@ export default function StudentDashboard() {
       </div>
 
       {/* Bottom Actions or Quick Links */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div {...fadeIn(0.45)}>
-          <Card className="border-none bg-primary/5 shadow-none overflow-hidden group">
-            <CardContent className="p-6">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="text-lg font-bold text-foreground">Ready for a new step?</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Discover the universities most compatible with your profile.</p>
-                  <Button className="mt-6 rounded-xl font-bold gap-2">
-                    Explore catalogue <ArrowRight className="w-4 h-4" />
-                  </Button>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div {...fadeIn(0.4)} className="md:col-span-1">
+          <Card className="border-none bg-gradient-to-br from-violet-500/10 to-primary/10 shadow-none overflow-hidden group h-full">
+            <CardContent className="p-6 flex flex-col h-full justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center mb-4">
+                  <Brain className="w-5 h-5 text-violet-600" />
                 </div>
-                <div className="hidden sm:block opacity-20 group-hover:scale-110 transition-transform duration-500">
-                  <Building2 className="w-24 h-24 text-primary" />
-                </div>
+                <h3 className="text-lg font-bold text-foreground tracking-tight">AI Orientation</h3>
+                <p className="text-xs text-muted-foreground mt-1 font-medium leading-relaxed">
+                  Discover your psychological profile and get personalized university recommendations.
+                </p>
               </div>
+              <Button 
+                variant="outline" 
+                className="mt-6 rounded-xl font-bold gap-2 w-full border-violet-200 hover:bg-violet-50 hover:text-violet-700 transition-all"
+                onClick={() => navigate('/student/ai-test')}
+              >
+                Start AI Test <Sparkles className="w-4 h-4" />
+              </Button>
             </CardContent>
           </Card>
         </motion.div>
 
-        <motion.div {...fadeIn(0.5)}>
-          <Card className="border-border/50 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-base font-bold">Alerts & Notifications</CardTitle>
+        <motion.div {...fadeIn(0.45)} className="md:col-span-1">
+          <Card className="border-none bg-primary/5 shadow-none overflow-hidden group h-full">
+            <CardContent className="p-6 flex flex-col h-full justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center mb-4">
+                  <Building2 className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground tracking-tight">Explore Universities</h3>
+                <p className="text-xs text-muted-foreground mt-1 font-medium leading-relaxed">
+                  Browse the catalogue of top-tier Chinese universities and find your match.
+                </p>
+              </div>
+              <Button 
+                className="mt-6 rounded-xl font-bold gap-2 w-full shadow-lg shadow-primary/20"
+                onClick={() => navigate('/student/catalogue')}
+              >
+                Catalogue <ArrowRight className="w-4 h-4" />
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div {...fadeIn(0.5)} className="md:col-span-1">
+          <Card className="border-border/50 shadow-sm h-full">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base font-bold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-orange-500" /> Alerts
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-start gap-3 p-3 rounded-xl bg-orange-500/5 border border-orange-500/10">
-                <AlertCircle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-bold text-foreground">Missing academic transcript</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Please upload your transcript from the last semester.</p>
+                <div className="space-y-1">
+                  <p className="text-[11px] font-bold text-foreground leading-tight">Missing academic transcript</p>
+                  <p className="text-[10px] text-muted-foreground leading-tight">Please upload your transcript from the last semester.</p>
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2">
-                <span className="text-xs text-muted-foreground font-medium">Updated 2h ago</span>
-                <Button variant="link" className="text-xs p-0 h-auto font-black uppercase tracking-widest">View all</Button>
+                <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Updated 2h ago</span>
+                <Button variant="link" className="text-[10px] p-0 h-auto font-black uppercase tracking-widest">View all</Button>
               </div>
             </CardContent>
           </Card>
