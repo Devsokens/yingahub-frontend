@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, CheckCircle2, XCircle, Users, FileText, GraduationCap, Mail, Phone, MapPin, Calendar, BookOpen, ExternalLink, Building2, Eye, Star } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, Users, FileText, GraduationCap, Mail, Phone, MapPin, Calendar, BookOpen, ExternalLink, Building2, Eye, Star, Brain, Sparkles, Target, ShieldCheck, Lightbulb, TrendingUp } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 
@@ -218,11 +218,14 @@ export default function AdminStudentDetail() {
                 </div>
 
                 <Tabs defaultValue="info" className="w-full">
-                    <TabsList className="w-full max-w-lg grid grid-cols-3 mb-8 bg-muted/50 p-1 rounded-2xl">
+                    <TabsList className="w-full max-w-2xl grid grid-cols-4 mb-8 bg-muted/50 p-1 rounded-2xl">
                         <TabsTrigger value="info" className="gap-2 rounded-xl data-[state=active]:shadow-sm"><Users className="w-4 h-4" />Profile</TabsTrigger>
                         <TabsTrigger value="questionnaire" className="gap-2 rounded-xl data-[state=active]:shadow-sm">
                             <FileText className="w-4 h-4" />Questionnaire
                             {student.questionnaire_submitted && <Badge className="ml-1.5 bg-primary/20 text-primary border-none shadow-none text-[9px] px-1.5 h-4">New</Badge>}
+                        </TabsTrigger>
+                        <TabsTrigger value="ai" className="gap-2 rounded-xl data-[state=active]:shadow-sm">
+                            <Brain className="w-4 h-4 text-violet-600" /> AI Insights
                         </TabsTrigger>
                         <TabsTrigger value="apps" className="gap-2 rounded-xl data-[state=active]:shadow-sm">
                             <GraduationCap className="w-4 h-4" />Applications
@@ -471,6 +474,109 @@ export default function AdminStudentDetail() {
                                         </div>
                                     </CardContent>
                                 </Card>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    
+                    {/* Tab 3: AI Insights */}
+                    <TabsContent value="ai">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                            <div className="lg:col-span-4 space-y-6">
+                                <Card className="border-none bg-gradient-to-br from-slate-900 to-slate-800 text-white overflow-hidden relative rounded-[32px]">
+                                    <CardContent className="pt-10 pb-10 text-center">
+                                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 mb-4">Compatibility Score</p>
+                                        <div className="relative inline-block">
+                                            <p className="text-6xl font-black tracking-tighter mb-2">19.2</p>
+                                            <span className="absolute top-0 -right-6 text-lg font-bold opacity-40">/25</span>
+                                        </div>
+                                        <div className="text-sm font-black uppercase tracking-widest mt-2 text-violet-400">High Potential</div>
+                                        <p className="text-[10px] text-white/50 mt-6 max-w-[200px] mx-auto font-medium">
+                                            Based on psychological mapping and academic background.
+                                        </p>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="border-border/50 shadow-sm rounded-[32px]">
+                                    <CardHeader>
+                                        <CardTitle className="text-sm font-black uppercase tracking-tight flex items-center gap-2">
+                                            <CheckCircle2 className="w-4 h-4 text-green-500" /> AI Observations
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
+                                        {[
+                                            "Strong cultural adaptability index.",
+                                            "Autonomous profile, suitable for Tier 1 cities.",
+                                            "High resilience in solitary study environments."
+                                        ].map((s, i) => (
+                                            <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30">
+                                                <Star className="w-3 h-3 text-green-600 mt-0.5 shrink-0" />
+                                                <p className="text-xs font-semibold text-foreground leading-tight">{s}</p>
+                                            </div>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            <div className="lg:col-span-8 space-y-8">
+                                <Card className="border-border/50 shadow-sm rounded-[32px]">
+                                    <CardHeader className="flex flex-row items-center justify-between">
+                                        <div>
+                                            <CardTitle className="text-lg font-black uppercase tracking-tight">Psychological Mapping</CardTitle>
+                                            <p className="text-xs text-muted-foreground font-bold">AI-Generated readiness report</p>
+                                        </div>
+                                        <Brain className="w-6 h-6 text-violet-500 opacity-20" />
+                                    </CardHeader>
+                                    <CardContent className="space-y-6 pt-4">
+                                        {[
+                                            { label: "Autonomy", score: 4.2, color: "bg-violet-500", icon: Brain },
+                                            { label: "Leadership", score: 3.5, color: "bg-rose-500", icon: Target },
+                                            { label: "Adaptability", score: 4.5, color: "bg-blue-500", icon: Sparkles },
+                                            { label: "Stress MGMT", score: 3.2, color: "bg-amber-500", icon: Lightbulb }
+                                        ].map((s, i) => (
+                                            <div key={i} className="space-y-2">
+                                                <div className="flex justify-between items-end">
+                                                    <div className="flex items-center gap-2">
+                                                        <s.icon className={`w-3.5 h-3.5 ${s.color.replace('bg-', 'text-')}`} />
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-foreground">{s.label}</span>
+                                                    </div>
+                                                    <span className="text-xs font-black">{s.score} / 5</span>
+                                                </div>
+                                                <div className="h-2 bg-muted rounded-full overflow-hidden p-0.5 border border-border/50">
+                                                    <motion.div
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: `${(s.score / 5) * 100}%` }}
+                                                        className={`h-full rounded-full ${s.color}`}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <Card className="border-border/50 shadow-sm rounded-[24px]">
+                                        <CardHeader><CardTitle className="text-xs font-black uppercase tracking-widest text-primary">Target Matches</CardTitle></CardHeader>
+                                        <CardContent className="space-y-2">
+                                            {["Tsinghua (92%)", "Zhejiang (87%)", "Fudan (84%)"].map((u, i) => (
+                                                <div key={i} className="flex items-center justify-between p-2 rounded-lg border border-border/40 text-[11px] font-bold">
+                                                    <span>{u}</span>
+                                                    <TrendingUp className="w-3 h-3 text-green-500" />
+                                                </div>
+                                            ))}
+                                        </CardContent>
+                                    </Card>
+                                    <Card className="border-border/50 shadow-sm rounded-[24px]">
+                                        <CardHeader><CardTitle className="text-xs font-black uppercase tracking-widest text-primary">Recommended Hubs</CardTitle></CardHeader>
+                                        <CardContent className="space-y-2">
+                                            {["Beijing (Tier 1)", "Shanghai (Tier 1)", "Hangzhou (Tier 2)"].map((u, i) => (
+                                                <div key={i} className="flex items-center justify-between p-2 rounded-lg border border-border/40 text-[11px] font-bold">
+                                                    <span>{u}</span>
+                                                    <MapPin className="w-3 h-3 text-primary" />
+                                                </div>
+                                            ))}
+                                        </CardContent>
+                                    </Card>
+                                </div>
                             </div>
                         </div>
                     </TabsContent>

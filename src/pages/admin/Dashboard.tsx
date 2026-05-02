@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, FileText, GraduationCap, DollarSign, TrendingUp, AlertCircle, Clock, BarChart3 } from "lucide-react";
+import { Users, FileText, GraduationCap, DollarSign, TrendingUp, AlertCircle, Clock, BarChart3, Brain, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 
@@ -13,7 +13,7 @@ const fadeIn = (delay = 0) => ({
 const kpis = [
   { label: "Enrolled Students", value: "247", change: "+12%", icon: Users, color: "text-blue-500", bg: "bg-blue-500/10" },
   { label: "Active Applications", value: "89", change: "+8%", icon: GraduationCap, color: "text-green-500", bg: "bg-green-500/10" },
-  { label: "Pending Documents", value: "34", change: "-5%", icon: FileText, color: "text-amber-500", bg: "bg-amber-500/10" },
+  { label: "AI Orientations", value: "156", change: "+24%", icon: Brain, color: "text-violet-500", bg: "bg-violet-500/10" },
   { label: "Monthly Revenue", value: "4.2M", change: "+15%", icon: DollarSign, color: "text-primary", bg: "bg-primary/10" },
 ];
 
@@ -123,6 +123,37 @@ export default function AdminDashboard() {
                   <p className="text-sm text-foreground leading-tight">{alert.text}</p>
                 </div>
               ))}
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div {...fadeIn(0.6)} className="md:col-span-2">
+          <Card className="border-none bg-violet-600 text-white shadow-lg shadow-violet-200 overflow-hidden relative">
+            <div className="absolute top-0 right-0 p-6 opacity-10">
+              <Sparkles className="w-24 h-24" />
+            </div>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Brain className="w-5 h-5" />
+                AI Platform Insights
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Top Matching Field</p>
+                  <p className="text-xl font-black">Computer Science</p>
+                  <p className="text-[10px] mt-1 opacity-80">64% of high-potential students</p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Conversion Prediction</p>
+                  <p className="text-xl font-black">High (82%)</p>
+                  <p className="text-[10px] mt-1 opacity-80">Next 14 days based on AI flow</p>
+                </div>
+              </div>
+              <Button variant="secondary" className="w-full mt-6 bg-white text-violet-600 hover:bg-white/90 font-black uppercase tracking-widest text-[10px] h-10 rounded-xl">
+                View Detailed Analytics Report
+              </Button>
             </CardContent>
           </Card>
         </motion.div>

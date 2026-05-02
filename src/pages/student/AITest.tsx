@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Sparkles } from "lucide-react";
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, Sparkles, Zap, Shield, Target, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -10,23 +10,24 @@ type Question = {
   id: number;
   question: string;
   category: "autonomie" | "adaptabilité" | "stress" | "autorité" | "solitude";
+  icon: any;
   options: { label: string; value: number }[];
 };
 
 const categoryColors: Record<string, string> = {
-  autonomie: "bg-violet-100 text-violet-700",
-  adaptabilité: "bg-blue-100 text-blue-700",
-  stress: "bg-amber-100 text-amber-700",
-  autorité: "bg-rose-100 text-rose-700",
-  solitude: "bg-emerald-100 text-emerald-700",
+  autonomie: "bg-violet-500/10 text-violet-600 border-violet-200",
+  adaptabilité: "bg-blue-500/10 text-blue-600 border-blue-200",
+  stress: "bg-amber-500/10 text-amber-600 border-amber-200",
+  autorité: "bg-rose-500/10 text-rose-600 border-rose-200",
+  solitude: "bg-emerald-500/10 text-emerald-600 border-emerald-200",
 };
 
 const categoryLabels: Record<string, string> = {
-  autonomie: "🧠 Autonomy",
-  adaptabilité: "🌍 Adaptability",
-  stress: "⚡ Stress Management",
-  autorité: "👑 Leadership",
-  solitude: "💚 Independence",
+  autonomie: "Autonomy",
+  adaptabilité: "Adaptability",
+  stress: "Stress Management",
+  autorité: "Leadership",
+  solitude: "Independence",
 };
 
 const questions: Question[] = [
@@ -34,6 +35,7 @@ const questions: Question[] = [
     id: 1,
     question: "How do you react to an unexpected problem when you are alone?",
     category: "autonomie",
+    icon: Brain,
     options: [
       { label: "I wait for help, I don't know what to do", value: 1 },
       { label: "I ask for advice before acting", value: 2 },
@@ -46,6 +48,7 @@ const questions: Question[] = [
     id: 2,
     question: "You arrive in a city where no one speaks your language. What do you do?",
     category: "adaptabilité",
+    icon: Globe,
     options: [
       { label: "I panic and look to return immediately", value: 1 },
       { label: "I stay in my comfort zone and avoid interactions", value: 2 },
@@ -58,6 +61,7 @@ const questions: Question[] = [
     id: 3,
     question: "You have 3 exams in the same week and a project to submit. How do you react?",
     category: "stress",
+    icon: Zap,
     options: [
       { label: "I am completely overwhelmed and don't know where to start", value: 1 },
       { label: "I stress a lot but try to organize at the last minute", value: 2 },
@@ -70,6 +74,7 @@ const questions: Question[] = [
     id: 4,
     question: "In a group work, what role do you naturally take?",
     category: "autorité",
+    icon: Target,
     options: [
       { label: "I follow instructions from others without giving my opinion", value: 1 },
       { label: "I participate but let others decide", value: 2 },
@@ -82,6 +87,7 @@ const questions: Question[] = [
     id: 5,
     question: "Imagine spending 6 months away from your family and friends. How do you feel?",
     category: "solitude",
+    icon: Heart,
     options: [
       { label: "It's impossible, I couldn't stand it", value: 1 },
       { label: "It would be very difficult, I would need constant contact", value: 2 },
@@ -90,132 +96,33 @@ const questions: Question[] = [
       { label: "No problem, I love my independence", value: 5 },
     ],
   },
-  {
-    id: 6,
-    question: "You are asked to present a project in front of 50 people. What is your reaction?",
-    category: "autorité",
-    options: [
-      { label: "I categorically refuse, it's too stressful", value: 1 },
-      { label: "I accept but with a lot of anxiety", value: 2 },
-      { label: "I am nervous but I prepare well", value: 3 },
-      { label: "I am fairly comfortable, I like sharing my ideas", value: 4 },
-      { label: "I love it, it's an opportunity to shine", value: 5 },
-    ],
-  },
-  {
-    id: 7,
-    question: "You receive several urgent tasks at the same time. What do you do?",
-    category: "stress",
-    options: [
-      { label: "I am paralyzed and do nothing", value: 1 },
-      { label: "I do everything at once and the result is mediocre", value: 2 },
-      { label: "I prioritize but with difficulty", value: 3 },
-      { label: "I prioritize effectively and handle one task at a time", value: 4 },
-      { label: "I am multi-tasking and handle everything simultaneously", value: 5 },
-    ],
-  },
-  {
-    id: 8,
-    question: "You are offered to taste a completely unknown dish from another culture. Your reaction?",
-    category: "adaptabilité",
-    options: [
-      { label: "No thanks, I prefer what I know", value: 1 },
-      { label: "I hesitate a lot but I might try a little", value: 2 },
-      { label: "Why not, if it looks appetizing", value: 3 },
-      { label: "Yes, I like discovering new flavors", value: 4 },
-      { label: "Absolutely! That's what I prefer when traveling", value: 5 },
-    ],
-  },
-  {
-    id: 9,
-    question: "Your computer breaks down the day before an important deadline. What do you do?",
-    category: "autonomie",
-    options: [
-      { label: "I cry and give up", value: 1 },
-      { label: "I call someone to help me immediately", value: 2 },
-      { label: "I search for solutions online and ask for help", value: 3 },
-      { label: "I find an alternative quickly (library, friend...)", value: 4 },
-      { label: "I always have a plan B, I am prepared for this kind of situation", value: 5 },
-    ],
-  },
-  {
-    id: 10,
-    question: "After an important failure (failed exam, rejection...), how do you react?",
-    category: "stress",
-    options: [
-      { label: "I am devastated for a long time", value: 1 },
-      { label: "I am very affected but I eventually get over it", value: 2 },
-      { label: "I am disappointed but I analyze what didn't work", value: 3 },
-      { label: "I bounce back fast and focus on the next step", value: 4 },
-      { label: "Failure motivates me even more to succeed", value: 5 },
-    ],
-  },
-  {
-    id: 11,
-    question: "You are at a party where you know no one. What do you do?",
-    category: "solitude",
-    options: [
-      { label: "I leave quickly, I am too uncomfortable", value: 1 },
-      { label: "I stay in a corner hoping someone comes to talk to me", value: 2 },
-      { label: "I observe first then engage in conversation carefully", value: 3 },
-      { label: "I go to people and introduce myself", value: 4 },
-      { label: "I am the center of the party in a few minutes", value: 5 },
-    ],
-  },
-  {
-    id: 12,
-    question: "Would you be ready to learn Mandarin to study in China?",
-    category: "adaptabilité",
-    options: [
-      { label: "No, it's too difficult for me", value: 1 },
-      { label: "Maybe, if it's mandatory", value: 2 },
-      { label: "Yes, but I would need a lot of support", value: 3 },
-      { label: "Yes, I like learning new languages", value: 4 },
-      { label: "Absolutely, it's even what excites me most about this project", value: 5 },
-    ],
-  },
-  {
-    id: 13,
-    question: "How do you manage your studies and schedule daily?",
-    category: "autonomie",
-    options: [
-      { label: "I don't really have organization, I do it day by day", value: 1 },
-      { label: "I try to organize but often forget things", value: 2 },
-      { label: "I use a planner but don't always follow it", value: 3 },
-      { label: "I am well organized with a clear schedule", value: 4 },
-      { label: "I am ultra-organized, every hour is planned", value: 5 },
-    ],
-  },
-  {
-    id: 14,
-    question: "A friend asks you to lead an important associative project. Your reaction?",
-    category: "autorité",
-    options: [
-      { label: "I refuse, too much responsibility", value: 1 },
-      { label: "I hesitate a lot, I'm not sure of my abilities", value: 2 },
-      { label: "I accept but look for a co-leader", value: 3 },
-      { label: "I accept with enthusiasm and start planning", value: 4 },
-      { label: "This is exactly the type of challenge I love taking on", value: 5 },
-    ],
-  },
-  {
-    id: 15,
-    question: "You have to live in modest housing during your studies abroad. What do you think?",
-    category: "adaptabilité",
-    options: [
-      { label: "It's unacceptable, I need my comfort", value: 1 },
-      { label: "It would be very difficult for me", value: 2 },
-      { label: "I could get used to it if it's temporary", value: 3 },
-      { label: "No problem, the most important thing is the studies", value: 4 },
-      { label: "It's part of the adventure, I like getting out of my comfort zone", value: 5 },
-    ],
-  },
 ];
+
+// Helper for globe icon which was missing from imports
+const Globe = (props: any) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
 
 export default function AITest() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [completed, setCompleted] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const navigate = useNavigate();
 
   const progress = (Object.keys(answers).length / questions.length) * 100;
@@ -228,7 +135,11 @@ export default function AITest() {
     if (currentQ < questions.length - 1) {
       setCurrentQ(currentQ + 1);
     } else {
-      setCompleted(true);
+      setIsAnalyzing(true);
+      setTimeout(() => {
+        setCompleted(true);
+        setIsAnalyzing(false);
+      }, 3000);
     }
   };
 
@@ -236,19 +147,44 @@ export default function AITest() {
     if (currentQ > 0) setCurrentQ(currentQ - 1);
   };
 
+  if (isAnalyzing) {
+    return (
+      <div className="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-[60vh] space-y-8">
+        <div className="relative">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            className="w-32 h-32 rounded-full border-4 border-primary/20 border-t-primary"
+          />
+          <Brain className="w-12 h-12 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        </div>
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl font-black uppercase tracking-tighter text-foreground">AI Analysis in Progress</h2>
+          <p className="text-muted-foreground font-medium">Crunching your answers to build your psychological profile...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (completed) {
     return (
       <div className="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-[60vh]">
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-center space-y-6">
-          <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto">
-            <CheckCircle2 className="w-10 h-10 text-green-500" />
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center space-y-8">
+          <div className="w-24 h-24 rounded-[32px] bg-green-500/10 flex items-center justify-center mx-auto shadow-xl shadow-green-500/5">
+            <CheckCircle2 className="w-12 h-12 text-green-500" />
           </div>
-          <h2 className="text-2xl font-bold text-foreground">Test finished! 🎉</h2>
-          <p className="text-muted-foreground">
-            Your results have been analyzed by our AI. Discover your psychological profile and recommendations.
-          </p>
-          <Button size="lg" onClick={() => navigate("/student/ai-profile")} className="gap-2">
-            View my AI Profile <ArrowRight className="w-4 h-4" />
+          <div className="space-y-2">
+            <h2 className="text-4xl font-black tracking-tighter uppercase text-foreground">Test Completed!</h2>
+            <p className="text-muted-foreground text-lg font-medium max-w-md mx-auto">
+              Your results are ready. Our AI has generated a detailed profile of your academic and cultural compatibility.
+            </p>
+          </div>
+          <Button 
+            size="lg" 
+            onClick={() => navigate("/student/ai-profile")} 
+            className="h-16 px-10 rounded-2xl text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30 gap-3 group"
+          >
+            Discover My AI Profile <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
           </Button>
         </motion.div>
       </div>
@@ -259,77 +195,104 @@ export default function AITest() {
   const currentAnswer = answers[q.id];
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-8 pb-20">
       {/* Header */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Brain className="w-5 h-5 text-primary" />
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center shadow-lg border border-primary/20">
+              <Brain className="w-7 h-7 text-primary" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-foreground">AI Orientation Test</h1>
-              <p className="text-sm text-muted-foreground">
-                Question {currentQ + 1} of {questions.length}
-              </p>
+              <h1 className="text-2xl font-black uppercase tracking-tighter text-foreground">Orientation Engine</h1>
+              <div className="flex items-center gap-2 mt-0.5">
+                <Badge variant="secondary" className="text-[10px] font-black uppercase tracking-widest bg-primary/5 text-primary border-none">
+                  AI Powered
+                </Badge>
+                <span className="text-xs text-muted-foreground font-bold uppercase tracking-widest">
+                  {currentQ + 1} / {questions.length}
+                </span>
+              </div>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/student/dashboard")} className="text-muted-foreground">
-            Quit
+          <Button variant="ghost" size="sm" onClick={() => navigate("/student/dashboard")} className="font-bold uppercase tracking-widest text-[10px] text-muted-foreground hover:text-foreground">
+            Save & Exit
           </Button>
         </div>
-        <Progress value={progress} className="h-2 mt-4" />
+        <div className="relative pt-1">
+          <Progress value={progress} className="h-2 rounded-full bg-muted shadow-inner" />
+          <motion.div 
+            className="absolute top-0 right-0 -translate-y-6"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Sparkles className="w-4 h-4 text-primary" />
+          </motion.div>
+        </div>
       </motion.div>
 
-      {/* Question */}
+      {/* Question Card */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentQ}
-          initial={{ opacity: 0, x: 30 }}
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -30 }}
-          transition={{ duration: 0.25 }}
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
-          <Card className="border-0 shadow-sm">
-            <CardContent className="pt-8 pb-6 px-6 md:px-8">
-              {/* Category badge */}
-              <div className="mb-4">
-                <span className={`inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full ${categoryColors[q.category]}`}>
-                  <Sparkles className="w-3 h-3" />
+          <Card className="border-border/50 shadow-2xl shadow-primary/5 rounded-[40px] overflow-hidden bg-white/80 backdrop-blur-sm">
+            <CardContent className="p-8 md:p-12">
+              <div className="mb-8">
+                <Badge className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border transition-colors ${categoryColors[q.category]}`}>
+                  <q.icon className="w-3.5 h-3.5 mr-2" />
                   {categoryLabels[q.category]}
-                </span>
+                </Badge>
               </div>
 
-              {/* Question text */}
-              <h2 className="text-xl font-semibold text-foreground mb-8 leading-relaxed">{q.question}</h2>
+              <h2 className="text-2xl md:text-3xl font-black text-foreground mb-12 leading-[1.2] tracking-tight">
+                {q.question}
+              </h2>
 
-              {/* Options as radio-style list */}
-              <div className="space-y-3">
-                {q.options.map((opt) => (
-                  <button
+              <div className="space-y-4">
+                {q.options.map((opt, i) => (
+                  <motion.button
                     key={opt.value}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
                     onClick={() => handleAnswer(opt.value)}
-                    className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all text-left ${currentAnswer === opt.value
-                        ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                    className={`w-full flex items-center justify-between p-6 rounded-3xl border-2 transition-all text-left group ${
+                      currentAnswer === opt.value
+                        ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                         : "border-border hover:border-primary/30 hover:bg-muted/30"
-                      }`}
+                    }`}
                   >
-                    {/* Radio circle */}
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${currentAnswer === opt.value ? "border-primary" : "border-muted-foreground/30"
+                    <div className="flex items-center gap-5">
+                      <div
+                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
+                          currentAnswer === opt.value 
+                            ? "border-primary bg-primary text-white scale-110" 
+                            : "border-muted-foreground/30"
                         }`}
-                    >
-                      {currentAnswer === opt.value && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                      >
+                        {currentAnswer === opt.value ? (
+                          <CheckCircle2 className="w-5 h-5" />
+                        ) : (
+                          <span className="text-xs font-black text-muted-foreground/50">{i + 1}</span>
+                        )}
+                      </div>
+                      <span
+                        className={`text-base md:text-lg font-bold transition-colors ${
+                          currentAnswer === opt.value ? "text-foreground" : "text-muted-foreground"
+                        }`}
+                      >
+                        {opt.label}
+                      </span>
                     </div>
-
-                    {/* Label */}
-                    <span
-                      className={`text-sm ${currentAnswer === opt.value ? "text-foreground font-medium" : "text-muted-foreground"
-                        }`}
-                    >
-                      {opt.label}
-                    </span>
-                  </button>
+                    <ArrowRight className={`w-5 h-5 transition-all ${
+                      currentAnswer === opt.value ? "text-primary opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+                    }`} />
+                  </motion.button>
                 ))}
               </div>
             </CardContent>
@@ -338,24 +301,33 @@ export default function AITest() {
       </AnimatePresence>
 
       {/* Navigation */}
-      <div className="flex justify-between items-center">
-        {currentQ > 0 ? (
-          <Button variant="outline" onClick={prev} className="gap-1">
-            <ArrowLeft className="w-4 h-4" /> Previous
-          </Button>
-        ) : (
-          <div />
-        )}
-        <Button onClick={next} disabled={!currentAnswer} className="gap-1">
+      <div className="flex justify-between items-center px-4">
+        <Button 
+          variant="ghost" 
+          onClick={prev} 
+          disabled={currentQ === 0}
+          className={`h-12 px-6 rounded-2xl gap-2 font-black uppercase tracking-widest text-xs transition-all ${currentQ === 0 ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+        >
+          <ArrowLeft className="w-4 h-4" /> Previous
+        </Button>
+        
+        <Button 
+          onClick={next} 
+          disabled={!currentAnswer} 
+          className="h-14 px-10 rounded-2xl gap-2 font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 transition-transform"
+        >
           {currentQ < questions.length - 1 ? (
             <>
-              Next <ArrowRight className="w-4 h-4" />
+              Next Step <ArrowRight className="w-4 h-4" />
             </>
           ) : (
-            "Finish Test"
+            <>
+              Finalize Test <Sparkles className="w-4 h-4" />
+            </>
           )}
         </Button>
       </div>
     </div>
   );
 }
+
