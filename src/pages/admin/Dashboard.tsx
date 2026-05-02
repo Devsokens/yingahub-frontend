@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, FileText, GraduationCap, DollarSign, TrendingUp, AlertCircle, Clock, BarChart3, Brain, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";

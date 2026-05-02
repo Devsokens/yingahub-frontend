@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -59,6 +60,7 @@ const documentStatus = [
 
 export default function StudentDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-10">
